@@ -1,0 +1,70 @@
+.auth-container {
+    padding-top: 50px;
+    border-top: 2px solid #EF5E5E;
+    text-align: center;
+
+    h1 {
+        font-size: 20px;
+        margin-bottom: 18px !important;
+    }
+}
+
+.form-signup {
+    width: 340px;
+    margin: auto;
+    background-color: white;
+    padding: 30px 26px;
+    border-radius: 6px;
+    margin-bottom: 60px;
+    text-align: left;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+
+    >div {
+        margin-bottom: 3px;
+    }
+
+    .btn {
+        margin-top: 23px;
+        min-height: 42.25px;
+
+        img {
+            height: 25px;
+            margin-top: -6px;
+        }
+
+    }
+
+    p {
+        text-align: center;
+        margin-top: 15px;
+        color: gray;
+        font-size: 12px;
+    }
+
+    .error {
+        font-size: 12px;
+        min-height: 22px;
+        padding-top: 4px;
+        margin-left: 3px;
+    }
+}
+
+.terms {
+    font-size: 12px;
+
+    label {
+        margin: 0;
+        margin-left: 25px;
+    }
+
+    .check-terms {
+        position: relative;
+        display: flex;
+        align-items: center;
+
+        input {
+            left: 3px;
+            position: absolute;
+        }
+    }
+}

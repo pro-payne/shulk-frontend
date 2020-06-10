@@ -1,0 +1,33 @@
+.shulk-btn {
+    transition: background-color 0.2s ease-in-out;
+    position: relative;
+    // overflow: hidden;
+}
+
+.shulk-btn-red {
+    background-color: #EE3E3E;
+    color: #FEFEFE;
+
+    &:hover {
+        color: #FEFEFE;
+        background-color: #EF5E5E;
+    }
+}
+
+.shulk-btn-blue {
+    background-color: #2b7ce8;
+    color: #FEFEFE;
+
+    &:hover {
+        color: #FEFEFE;
+        background-color: #276fce;
+    }
+}
+
+.shulk-btn .ripple {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.7);
+    position: absolute;
+}

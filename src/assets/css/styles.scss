@@ -1,0 +1,47 @@
+@import url("../../../node_modules/font-awesome/css/font-awesome.css");
+@import "~angular-notifier/styles";
+@import './_button';
+@import './_input';
+@import './_modal';
+
+* {
+  outline: none;
+}
+
+body,
+html {
+  margin: 0;
+  padding: 0;
+  color: #292929;
+  font-family: 'Roboto', sans-serif;
+  font-size: 14px;
+  width: 100%;
+  height: 100%;
+  background-color: #F6F6F6;
+  font-weight: 400;
+}
+
+a:hover {
+  color: #007bff;
+}
+
+.app {
+  height: 100%;
+}
+
+main.push-main {
+  padding-top: 70px;
+}
+
+.breadcrumb {
+  background-color: #fbfbfb;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.12);
+  border-radius: 6px;
+  padding: 11px 25px;
+  font-size: 13px;
+  margin: 30px 0 35px;
+}
+
+.notifier__container ul {
+  margin: 0;
+}

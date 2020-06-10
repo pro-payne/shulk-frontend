@@ -1,0 +1,110 @@
+.p-container {
+    margin-bottom: 12px;
+}
+
+.orders-container {
+    >div {
+        margin-bottom: 40px;
+    }
+}
+
+.order-reference-status {
+    display: flex;
+    font-size: 13px;
+
+    .order-reference {
+        .order-ref {
+            font-weight: 500;
+            font-size: 14px;
+
+            a {
+                color: #292929;
+                text-decoration: underline;
+            }
+        }
+
+        .order-date {
+            font-size: 12px;
+        }
+    }
+
+    >div {
+        flex: 100%;
+    }
+
+    .order-status {
+        text-align: right;
+
+        .status {
+            font-size: 11px;
+            text-transform: uppercase;
+            font-weight: 500;
+        }
+
+        .status.pending {
+            color: #ac9b3c;
+        }
+
+        .status.canceled {
+            color: #ee3e3e;
+        }
+
+        .status.completed {
+            color: #35b323;
+        }
+
+        .status.processing {
+            color: #2dacdd;
+        }
+    }
+}
+
+.order-bottom {
+    display: flex;
+    padding-top: 15px;
+    border-top: 1px solid#f2f2f2;
+    margin-top: 15px;
+
+    >div {
+        flex: 100%;
+    }
+
+    .delivery {
+        font-size: 12px;
+    }
+
+    .order-actions {
+        text-align: right;
+
+        .btn {
+            min-height: 35px;
+            min-width: 85px;
+
+            img {
+                height: 25px;
+                margin-top: -2px;
+            }
+
+        }
+    }
+}
+
+.orders-loader {
+    justify-content: center;
+    height: 350px;
+    display: flex;
+    padding-top: 100px;
+
+    img {
+        height: 80px;
+    }
+}
+
+
+.empty-order {
+    text-align: center;
+    margin: 15px 0;
+    font-size: 16px !important;
+    font-weight: 400;
+    color: #888787;
+}

@@ -1,0 +1,137 @@
+<div class="modal-body">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col p-0">
+                <div class="order-container">
+                    <div class="order-reference-status">
+                        <div class="order-reference">
+                            <div class="order-ref">Order #{{orderDetails.id}}</div>
+                            <div class="order-date">Ordered {{orderDetails.ordered_at | date}}</div>
+                            <div class="order-status">
+                                <div class="status-txt">Order Status</div>
+                                <div class="status {{orderDetails.status | lowercase}}">
+                                    {{orderDetails.status | uppercase}}</div>
+                            </div>
+                        </div>
+                        <div class="cancel-order">
+                            <button class="close" aria-label="Close" (click)="bsModalRef.hide()">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="order-bottom">
+                        <div class="order-detail">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="detail-title">
+                                        <i class="fa fa-user-circle"></i>
+                                        Customer
+                                    </div>
+                                    <div class="detail-container">
+                                        <div>{{orderDetails.customer.name}}</div>
+                                        <div>{{orderDetails.customer.number}}</div>
+                                    </div>
+                                </div>
+                                <div class="col-3"></div>
+                                <div class="col">
+                                    <div class="detail-title">
+                                        <i class="fa fa-address-book"></i>
+                                        Shipping Address
+                                    </div>
+                                    <div class="detail-container">
+                                        <div>{{orderDetails.delivery_address.receiver}}</div>
+                                        <div>{{orderDetails.delivery_address.street}}</div>
+                                        <div>{{orderDetails.delivery_address.city}}</div>
+                                        <div>{{orderDetails.delivery_address.zip}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row order-summary-container">
+                                <div class="col">
+                                    <div class="detail-title">
+                                        <i class="fa fa-list-ul"></i>
+                                        Order Summary
+                                    </div>
+                                    <div class="detail-container order-summary">
+                                        <div class="summary-details">
+                                            <div class="summary-table table-responsive">
+                                                <table class="table table-cell table-hover table-striped">
+                                                    <thead>
+                                                        <th>Image</th>
+                                                        <th>Product name</th>
+                                                        <th>Product Owner</th>
+                                                        <th>Quantity</th>
+                                                        <th>Price</th>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr *ngFor="let item of orderDetails.summary.items">
+                                                            <td class="order-image">
+                                                                <div>
+                                                                    <img src="{{item.picture}}" alt="">
+                                                                </div>
+                                                            </td>
+                                                            <td>{{item.name}}</td>
+                                                            <td>
+                                                                <a [routerLink]="['/', 'shop', item.owner.identity]"
+                                                                    target="_blank">@{{item.owner.name}}</a>
+                                                            </td>
+                                                            <td class="text-center">{{item.quantity}}</td>
+                                                            <td>{{item.price}}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="summary-item">
+                                                <div>Delivery: {{orderDetails.summary.delivery_cost}}</div>
+                                            </div>
+                                        </div>
+                                        <div class="summary-item" *ngIf="orderState != 'cancel'">
+                                            <div>Order Total: {{orderDetails.summary.delivery_cost}}</div>
+                                        </div>
+                                        <div class="summary-pay" *ngIf="orderState == 'cancel'">
+                                            <div>Paid: <span>{{orderDetails.summary.total}}</span></div>
+                                        </div>
+                                        <div *ngIf="orderState == 'cancel'" class="order-action">
+                                            <div>Change status: </div>
+                                            <div>
+                                                <div class="btn-group" dropdown>
+                                                    <button [disabled]="disableNow" id="button-basic" dropdownToggle
+                                                        type="button" class="btn btn-secondary" aria-controls="options">
+                                                        <div [class.d-none]="disableNow">
+                                                            <span #toggle_text
+                                                                style="margin-right: 3px;">{{orderDetails.status}}</span>
+                                                            <span class="fa fa-angle-up"></span>
+                                                        </div>
+                                                        <div [class.d-none]="!disableNow">
+                                                            <img src="../../../../../../../assets/img/loading.gif"
+                                                                alt="">
+                                                        </div>
+                                                    </button>
+                                                    <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu"
+                                                        role="menu" aria-labelledby="button-basic">
+                                                        <li role="menuitem"><a class="dropdown-item" href="#"
+                                                                (click)="changeStatus($event, toggle_text, 'Pending')">Pending</a>
+                                                        </li>
+                                                        <li role="menuitem"><a class="dropdown-item" href="#"
+                                                                (click)="changeStatus($event, toggle_text, 'Processing')">Processing</a>
+                                                        </li>
+                                                        <li role="menuitem"><a class="dropdown-item" href="#"
+                                                                (click)="changeStatus($event, toggle_text, 'Canceled')">Cancel</a>
+                                                        </li>
+                                                        <li role="menuitem"><a class="dropdown-item" href="#"
+                                                                (click)="changeStatus($event, toggle_text, 'Completed')">Completed</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

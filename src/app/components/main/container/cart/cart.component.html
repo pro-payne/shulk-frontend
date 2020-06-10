@@ -1,0 +1,97 @@
+<div class="nav-header fixed"></div>
+
+<main class="push-main">
+    <img src="../../../../../assets/img/empty_cart.png" height="0" width="0" class="d-none" alt="">
+    <div class="container-fluid cart-container">
+        <div *ngIf="cartLoading" class="cart-loader">
+            <img src="../../../../../assets/img/loader.gif" alt="">
+        </div>
+        <div *ngIf="!cartLoading && cartData.length == 0" class="empty-cart">
+            <div class="empty-image">
+                <img src="../../../../../assets/img/empty_cart.png" alt="">
+            </div>
+            <h2>Your cart is empty</h2>
+            <div>
+                <a class="continue-shopping" [routerLink]="['/', 'index']" fragment="categories"><i class="fa fa-angle-left"></i> Continue Shopping</a>
+            </div>
+        </div>
+        <div *ngIf="!cartLoading && cartData.length != 0">
+            <div class="row">
+                <div class="col">
+                    <a class="continue-shopping" [routerLink]="['/', 'index']" fragment="categories"><i class="fa fa-angle-left"></i> Continue Shopping</a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-8 cart-items-container">
+                    <div class="container-fluid">
+                        <div class="cart-items">
+                            <div *ngFor="let item of cartData; index as i" class="cart-item">
+                                <ul>
+                                    <li class="item-image">
+                                        <img *ngFor="let image of item.pictures" src="{{image}}" alt="">
+                                    </li>
+                                    <li class="item-name">
+                                        <div>
+                                            <a
+                                                [routerLink]="['/', 'product', item.name | safeUrl, item.id]">{{item.name}}</a>
+                                        </div>
+                                        <a [routerLink]="['/', 'shop', item.owner.identity]">{{item.owner.name}}</a>
+                                    </li>
+                                    <li class="item-quantity">
+                                        <button class="minus-quantity" (click)="quantityDown(quantity, i)"><i
+                                                class="fa fa-minus"></i></button>
+                                        <input type="number" min="1" (change)="change(quantity, i)"
+                                            value="{{item.quantity}}" #quantity>
+                                        <button class="add-quantity" (click)="quantityUp(quantity, i)"><i
+                                                class="fa fa-plus"></i></button>
+                                    </li>
+                                    <li class="item-price">
+                                        R {{item.price}}
+                                    </li>
+                                    <li class="item-remove">
+                                        <span title="Remove this item" (click)="removeItem(i)"
+                                            aria-hidden="true">&times;</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <a class="continue-shopping" [routerLink]="['/', 'index']" fragment="categories">
+                                    <i class="fa fa-angle-left"></i> Continue Shopping
+                                </a>
+                                <button class="btn btn-danger btn-sm continue-shopping clear-cart" (click)="clearCart()">Clear Cart</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col summary-container">
+                    <div class="cart-summary">
+                        <h1>Summary</h1>
+                        <div class="summary">
+                            <ul>
+                                <li>Order total</li>
+                                <li>R {{orderTotal}}</li>
+                            </ul>
+                            <ul>
+                                <li>Shipping</li>
+                                <li>R {{shippingCost}}</li>
+                            </ul>
+                        </div>
+                        <div class="summary subtotal">
+                            <ul>
+                                <li>Subtotal</li>
+                                <li class="subtotal">R {{subTotal}}</li>
+                            </ul>
+                        </div>
+                        <div class="text-center">
+                            <button class="btn btn-primary" (click)="navigateToCheckOut()">Check Out</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<div class="main-footer"></div>

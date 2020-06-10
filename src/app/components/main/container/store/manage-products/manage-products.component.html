@@ -1,0 +1,226 @@
+<div class="nav-header fixed"></div>
+
+<main class="push-main">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col">
+                <nav class="" aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a [routerLink]="['/', 'store', 'dashboard']">Dashboard</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Manage Products</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <div class="container content-container">
+        <div class="row">
+            <div class="col-1"></div>
+            <div class="col">
+                <div class="d-none">
+                    <div class="manage-label"><span>Recently added</span></div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="items">
+                                <div>
+                                    <div *ngIf="ghostLoading" class="ghost-item">
+                                        <div class="item-content">
+                                            <div class="content">
+                                                <div>
+                                                    <div *ngFor="let it of ghostData" class="item-container">
+                                                        <div>
+                                                            <div class="item"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div *ngIf="!ghostLoading">
+                                        <div class="item-content">
+                                            <div class="content">
+                                                <div *ngIf="products.length != 0">
+                                                    <div *ngFor="let item of products; index as p"
+                                                        class="item-container">
+                                                        <div>
+                                                            <div class="item">
+                                                                <a
+                                                                    [routerLink]="['/', 'product', item.name | safeUrl, item.id]">
+                                                                    <div>
+                                                                        <div class="item-details">
+                                                                            <div class="item-image">
+                                                                                <div class="item-logo">
+                                                                                    <img src="{{item.owner.logo}}"
+                                                                                        alt="">
+                                                                                </div>
+                                                                                <a [routerLink]="['/', 'shop', item.owner.identity | lowercase]"
+                                                                                    class="item-detail-title"
+                                                                                    title="{{item.owner.name}}">@{{item.owner.name}}</a>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="product-images">
+                                                                            <img *ngFor="let image of item.pictures"
+                                                                                src="{{image}}" height="150" alt="">
+                                                                        </div>
+                                                                    </div>
+                                                                </a>
+                                                                <div class="favorite"
+                                                                    [attr.title]="!item.favorite ? 'Add to favorites' : 'Remove from favorites'"
+                                                                    (click)="favorite({p: p, f: item.favorite})">
+                                                                    <i [class.fa-heart-o]="!item.favorite"
+                                                                        [class.fa-heart]="item.favorite" class="fa"></i>
+                                                                </div>
+                                                                <div class="product-details">
+                                                                    <div class="product-info">
+                                                                        <div class="product-name" title="{{item.name}}">
+                                                                            {{item.name}}</div>
+                                                                        <div class="product-price">R {{item.price}}
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="quick-view">
+                                                                        <button class="btn btn-sm"
+                                                                            (click)="quickLook($event, {product: p})">Quick
+                                                                            Look</button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div *ngIf="products.length == 0">
+                                                    <h3>No recently added products...</h3>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="manage-label"><span>Add products</span></div>
+                    <div class="row">
+                        <div class="col-2"></div>
+                        <div class="col">
+                            <form action="" #addProducts="ngForm" (ngSubmit)="onSubmit()">
+                                <div class="p-container">
+                                    <div class="product-label"><span>Product group:</span></div>
+                                    <div class="product-container">
+                                        <div class="row">
+                                            <div class="col">
+                                                <label for="category">Category <span class="required"></span></label>
+                                                <select name="category" id="by-category"
+                                                    class="form-control by-group by-category">
+                                                    <option value="">Select category...</option>
+                                                    <option *ngFor="let category of categories; index as i"
+                                                        [selected]="category.active" value="{{i}}">
+                                                        {{category.name}}</option>
+                                                </select>
+                                                <div class="error" id="category-error"></div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col">
+                                                <label for="sub-category">Sub-category <span class="required"></span></label>
+                                                <select name="sub-category" disabled="" id="by-subcategory"
+                                                    class="form-control by-group by-subcategory">
+                                                    <option value="">Select sub-category...</option>
+                                                    <option *ngFor="let sub_category of sub_categories; index as s"
+                                                        [selected]="sub_category.active" value="{{s}}">
+                                                        {{sub_category.name}}</option>
+                                                </select>
+                                                <div class="error" id="subcategory-error">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="seperator"></div>
+                                <div class="p-container">
+                                    <div class="product-label"><span>Items:</span></div>
+                                    <div>
+                                        <div class="product-container product-rows"
+                                            *ngFor="let productRow of groupProducts; let i = index;">
+                                            <div class="row">
+                                                <div class="col">
+                                                    <label for="product-name">Product name</label>
+                                                    <input name="product_name_{{i}}" type="text" required=""
+                                                        (blur)="validator($event)" class="form-control product-name"
+                                                        [(ngModel)]="productRow.name">
+                                                    <div class="error">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col">
+                                                    <label for="brand-name">Brand name</label>
+                                                    <input type="text" name="brand_name_{{i}}" required=""
+                                                        (blur)="validator($event)" class="form-control brand-name"
+                                                        [(ngModel)]="productRow.brand">
+                                                    <div class="error">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col">
+                                                    <label for="description">Description</label>
+                                                    <textarea name="description_{{i}}" (blur)="validator($event)"
+                                                        class="form-control description"
+                                                        placeholder="Describe the item..."
+                                                        [(ngModel)]="productRow.description"></textarea>
+                                                    <div class="error">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col">
+                                                    <label for="price">Price</label>
+                                                    <input type="number" name="product_price_{{i}}"
+                                                        (blur)="validator($event)" min="0" required=""
+                                                        class="form-control price" [(ngModel)]="productRow.price">
+                                                    <div class="error">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col remove-item">
+                                                    <button (click)="removeItem($event, i)"
+                                                        class="btn btn-danger btn-sm">Remove Item</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="add-another">
+                                        <button type="button" class="btn btn-primary" (click)="addItem($event);">
+                                            Add another item
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="action-btns">
+                                    <div class="row">
+                                        <div class="col text-left">
+                                            <button class="btn btn-secondary btn-lg" type="button">Cancel</button>
+                                        </div>
+                                        <div class="col text-right">
+                                            <button class="btn btn-success btn-lg" type="submit" [disabled]="disableBtn">
+                                                    <div [class.d-none]="disableBtn">Save</div>
+                                                    <div [class.d-none]="!disableBtn"><img src="../../../../../../assets/img/loading.gif" alt=""></div>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-2"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-1"></div>
+        </div>
+    </div>
+</main>
+
+<div class="main-footer"></div>

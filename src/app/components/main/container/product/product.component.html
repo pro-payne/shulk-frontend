@@ -1,0 +1,74 @@
+<div class="nav-header fixed"></div>
+
+<main class="push-main">
+
+    <div class="container-fluid product-row">
+        <div class="row">
+            <div class="col">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a [routerLink]="['/']">Home</a></li>
+                        <li *ngFor="let item of breadcrumb; index as i" [class.active]="item.current"
+                            [attr.aria-current]="item.current ? 'page' : ''" class="breadcrumb-item">
+                            <a routerLink="/{{item.link}}">{{item.value}}</a>
+                        </li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+        <div *ngIf="ghostLoading" class="row product-loader">
+            <img src="../../../../../assets/img/loader.gif" alt="">
+        </div>
+        <div *ngIf="!ghostLoading" class="row">
+            <div class="col-6 product-images">
+                <div class="col">
+                    <img *ngFor="let image of product.pictures" src="{{image}}" alt="">
+                </div>
+            </div>
+            <div class="col-5 product-details">
+                <div class="favorite" (click)="favorite()">
+                        <i [class.fa-heart-o]="!product.favorite" [class.fa-heart]="product.favorite" class="fa"
+                        [attr.title]="!product.favorite ? 'Add to favorites' : 'Remove from favorites'"></i>
+                </div>
+                <h1>{{product.name}}</h1>
+                <div class="provided-by">at <a
+                        [routerLink]="['/', 'shop', product.owner.identity]">{{product.owner.name}}</a></div>
+                <div class="product-price">R {{product.price}}</div>
+                <div>
+                    <label>Description:</label>
+                    <div class="description">{{product.description}}</div>
+                </div>
+                <div class="special-info">
+                    <label for="instructions">Add special instructions:</label>
+                    <textarea name="instructions" (change)="contentChange($event)" placeholder="You can give more details about what you want..." class="form-control"
+                        id="instructions"></textarea>
+                </div>
+                <div class="product-actions">
+                    <div class="container-fluid p-0">
+                        <div class="row">
+                            <div class="col quantity">
+                                <label for="quantity">Qty</label>
+                                <div class="quantity-input">
+                                    <button class="input-minus" (click)="quantityDown(quantity)"><i
+                                            class="fa fa-minus"></i></button>
+                                    <input type="number" (change)="contentChange($event)" min="1" value="1" name="quantity" id="quantity" #quantity>
+                                    <button class="input-plus" (click)="quantityUp(quantity)"><i
+                                            class="fa fa-plus"></i></button>
+                                </div>
+                            </div>
+                            <div class="col add-to-cart">
+                                <button class="btn shulk-btn-red" [disabled]="updateCart" (click)="addToCart($event)">
+                                    <span class="icon"><i class="fa fa-shopping-cart"></i></span>
+                                    <span *ngIf="updated" class="text">Update cart</span>
+                                    <span *ngIf="!updated" class="text">Add to cart</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<div class="main-footer"></div>

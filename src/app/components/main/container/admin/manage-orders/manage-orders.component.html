@@ -1,0 +1,102 @@
+<div class="nav-header fixed"></div>
+<main class="push-main">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col">
+                <nav class="" aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a [routerLink]="['/', 'customer', 'dashboard']">Dashboard</a>
+                        </li>
+                        <li class="breadcrumb-item active" aria-current="page">Manage Orders</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <div class="container content-container">
+        <div class="row">
+            <div class="col-1"></div>
+            <div class="col">
+
+                <div class="">
+                    <div>
+                        <div class="content-label"><span>Orders</span></div>
+                        <div class="row">
+                            <div class="col-1"></div>
+                            <div class="col">
+                                <div class="sort-container">
+                                    <div>
+                                        <label for="by-status">Order Status</label>
+                                        <div style="min-width: 125px;">
+                                            <select name="" id="by-status" class="form-control custom-select">
+                                                <option *ngFor="let status of statuses" [selected]="status.selected"
+                                                    value="{{status.value | lowercase}}">{{status.value}}: {{status.count | statsCount}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label for="by-order">Sort</label>
+                                        <div style="min-width: 110px;">
+                                            <select name="" id="by-order" class="form-control custom-select">
+                                                <option [selected]="sort == 'desc'" value="desc">New - Old</option>
+                                                <option [selected]="sort == 'asc'" value="asc">Old - New</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="orders-loader" *ngIf="loadingOrders">
+                                    <img src="../../../../../../../assets/img/loader.gif" alt="">
+                                </div>
+                                <div *ngIf="!loadingOrders && orders.length != 0">
+                                    <div class="card-container">
+                                        <table class="table table-cell table-hover">
+                                            <thead>
+                                                <th>Order No.</th>
+                                                <th>Customer Name</th>
+                                                <th>Order Price</th>
+                                                <th>Order Date</th>
+                                                <th>Order Status</th>
+                                                <th>Actions</th>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let order of orders; index as i">
+                                                    <td class="order-number" role="link"
+                                                        (click)="orderDetails($event, i)">#{{order.id}}</td>
+                                                    <td>{{order.ordered_by.name}}</td>
+                                                    <td>{{order.summary.total}}</td>
+                                                    <td>{{order.ordered_at | date:"short"}}</td>
+                                                    <td>{{order.status}}</td>
+                                                    <td>
+                                                        <button class="btn btn-secondary btn-sm"
+                                                            (click)="orderDetails($event, i)">Details</button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div *ngIf="orders.length == 0">
+                                    <h3 class="empty-order">
+                                        <div *ngIf="selectedStatus == ''">No <strong>available</strong> orders yet</div>
+                                        <div *ngIf="selectedStatus == 'pending'">No <strong>pending</strong> orders yet
+                                        </div>
+                                        <div *ngIf="selectedStatus == 'processing'">No orders being
+                                            <strong>processed</strong> yet</div>
+                                        <div *ngIf="selectedStatus == 'canceled'">No <strong>canceled</strong> orders
+                                        </div>
+                                        <div *ngIf="selectedStatus == 'completed'">No <strong>complete</strong> orders
+                                            yet</div>
+                                    </h3>
+                                </div>
+                            </div>
+                            <div class="col-1"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-1"></div>
+        </div>
+    </div>
+</main>
+<div class="main-footer"></div>

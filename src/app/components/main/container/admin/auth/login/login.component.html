@@ -1,0 +1,51 @@
+<div class="auth-container">
+    <div>
+        <a [routerLink]="['/']" title="Home">
+            <img class="mb-4" src="/assets/img/logo.png" alt="" width="70.3" height="95">
+        </a>
+    </div>
+    <h1 class="h3 mb-3 font-weight-normal">
+        <div>Please login in</div>
+    </h1>
+    <form class="form-signup" (ngSubmit)="onSubmit($event)" novalidate [formGroup]="loginForm">
+        <div>
+            <label for="inputEmail" class="sr-only">Email Address</label>
+            <input type="email" formControlName="email" id="inputEmail" class="form-control" placeholder="Email Address"
+                required>
+            <div class="error">
+                <div *ngFor="let validation of validation_messages.email">
+                    <div class="error-message"
+                        *ngIf="loginForm.get('email').hasError(validation.type) && (loginForm.get('email').dirty || loginForm.get('email').touched)">
+                        {{validation.message}}</div>
+                </div>
+            </div>
+        </div>
+        <div>
+            <label for="inputPassword" class="sr-only">Password</label>
+            <div class="password-field">
+                <input formControlName="password" name="password" type="password" id="inputPassword"
+                    class="form-control" placeholder="Password" required>
+                <button class="reveal-eye" type="button" (click)="openEye()">
+                    <i class="fa fa-eye" id="eye"></i>
+                </button>
+            </div>
+            <div class="error">
+                <div *ngFor="let validation of validation_messages.password">
+                    <div class="error-message"
+                        *ngIf="loginForm.get('password').hasError(validation.type) && (loginForm.get('password').dirty || loginForm.get('password').touched)">
+                        {{validation.message}}</div>
+                </div>
+            </div>
+        </div>
+        <button class="btn btn-lg shulk-btn-red btn-block" [disabled]="!loginForm.valid || disableBtn"
+            [disabled]="loginFail" type="submit">
+            <div [class.d-none]="disableBtn">Sign in</div>
+            <div [class.d-none]="!disableBtn"><img src="../../../../../assets/img/loading.gif" alt=""></div>
+        </button>
+        <p>
+            <a [routerLink]="['/', 'account', 'forgot-password']" title="Forgot password">Forgot password</a>
+        </p>
+
+    </form>
+</div>
+<notifier-container></notifier-container>

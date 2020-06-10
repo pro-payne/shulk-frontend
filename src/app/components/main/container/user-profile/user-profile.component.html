@@ -1,0 +1,333 @@
+<div class="nav-header fixed"></div>
+<main class="push-main">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col">
+                <nav class="" aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a *ngIf="userType == 'admin'" [routerLink]="['/', 'admin', 'dashboard']">Dashboard</a>
+                            <a *ngIf="userType == 'manager'" [routerLink]="['/', 'store', 'dashboard']">Dashboard</a>
+                            <a *ngIf="userType == 'customer'" [routerLink]="['/', 'customer', 'account']">My Account</a>
+                        </li>
+                        <li class="breadcrumb-item active" aria-current="page">Profile</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <div class="container content-container">
+        <div class="row">
+            <div class="col-1"></div>
+            <div class="col">
+                <div>
+                    <div class="row">
+                        <div class="col-2"></div>
+                        <div class="col">
+                            <div *ngIf="publicUser == ''">
+                                <div class="p-container">
+                                    <div class="product-label"><span>Account:</span></div>
+                                    <div>
+                                        <div class="product-container product-rows">
+                                            <form action="" [formGroup]="accountForm" (ngSubmit)="onSubmit()">
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <label for="first_name">First name</label>
+                                                        <input formControlName="first_name" id="first_name" type="text"
+                                                            required="" class="form-control">
+                                                        <div class="error">
+                                                            <div *ngFor="let validation of account_messages.first_name">
+                                                                <div class="error-message"
+                                                                    *ngIf="accountForm.get('first_name').hasError(validation.type) && (accountForm.get('first_name').dirty || accountForm.get('first_name').touched)">
+                                                                    {{validation.message}}</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <label for="last_name">Last name</label>
+                                                        <input type="text" formControlName="last_name" id="last_name"
+                                                            required="" class="form-control">
+                                                        <div class="error">
+                                                            <div *ngFor="let validation of account_messages.last_name">
+                                                                <div class="error-message"
+                                                                    *ngIf="accountForm.get('last_name').hasError(validation.type) && (accountForm.get('last_name').dirty || accountForm.get('last_name').touched)">
+                                                                    {{validation.message}}</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <label for="email">Email</label>
+                                                        <input type="email" readonly="" formControlName="email"
+                                                            id="email" required="" class="form-control">
+                                                        <div class="error">
+                                                            <div *ngFor="let validation of account_messages.email">
+                                                                <div class="error-message"
+                                                                    *ngIf="accountForm.get('email').hasError(validation.type) && (accountForm.get('email').dirty || accountForm.get('email').touched)">
+                                                                    {{validation.message}}</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <label for="number">Phone number</label>
+                                                        <input type="text" formControlName="number" id="number"
+                                                            required="" class="form-control">
+                                                        <div class="error">
+                                                            <div *ngFor="let validation of account_messages.number">
+                                                                <div class="error-message"
+                                                                    *ngIf="accountForm.get('number').hasError(validation.type) && (accountForm.get('number').dirty || accountForm.get('number').touched)">
+                                                                    {{validation.message}}</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row form-buttons">
+                                                    <div class="col text-left">
+                                                        <button class="btn btn-secondary" type="button"
+                                                            (click)="accountCancel($event)">Cancel</button>
+                                                    </div>
+                                                    <div class="col text-right">
+                                                        <button class="btn btn-success" type="submit"
+                                                            [disabled]="disableAccountBtn">
+                                                            <div [class.d-none]="accountLoading">Save Changes</div>
+                                                            <div [class.d-none]="!accountLoading"><img
+                                                                    src="../../../../../../assets/img/loading.gif"
+                                                                    alt="">
+                                                            </div>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Shop profile -->
+                            <div *ngIf="publicUser == 'shop'">
+                                <div class="p-container">
+                                    <div class="product-label"><span>Shop Profile:</span></div>
+                                    <div>
+                                        <div class="product-container product-rows">
+                                            <form action="" [formGroup]="shopForm" (ngSubmit)="onSubmit()">
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <label for="shop_name">Shop name</label>
+                                                        <input formControlName="shop_name" id="shop_name" type="text"
+                                                            required="" class="form-control">
+                                                        <div class="error">
+                                                            <div *ngFor="let validation of shop_messages.shop_name">
+                                                                <div class="error-message"
+                                                                    *ngIf="shopForm.get('shop_name').hasError(validation.type) && (shopForm.get('shop_name').dirty || shopForm.get('shop_name').touched)">
+                                                                    {{validation.message}}</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <label for="description">Shop Description</label>
+                                                        <textarea name="description" required id="description"
+                                                            formControlName="description" class="form-control"
+                                                            placeholder="Describe your shop..."></textarea>
+                                                        <div class="error">
+                                                            <div *ngFor="let validation of shop_messages.description">
+                                                                <div class="error-message"
+                                                                    *ngIf="shopForm.get('description').hasError(validation.type) && (shopForm.get('description').dirty || shopForm.get('description').touched)">
+                                                                    {{validation.message}}</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <label for="location">Location</label>
+                                                        <input type="text" formControlName="location" id="location"
+                                                            required="" class="form-control">
+                                                        <div class="error">
+                                                            <div *ngFor="let validation of shop_messages.location">
+                                                                <div class="error-message"
+                                                                    *ngIf="shopForm.get('location').hasError(validation.type) && (shopForm.get('location').dirty || shopForm.get('location').touched)">
+                                                                    {{validation.message}}</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <label for="number">Contact number</label>
+                                                        <input type="text" formControlName="number" id="number"
+                                                            required="" class="form-control">
+                                                        <div class="error">
+                                                            <div *ngFor="let validation of shop_messages.number">
+                                                                <div class="error-message"
+                                                                    *ngIf="shopForm.get('number').hasError(validation.type) && (shopForm.get('number').dirty || shopForm.get('number').touched)">
+                                                                    {{validation.message}}</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row form-buttons">
+                                                    <div class="col text-left">
+                                                        <button class="btn btn-secondary" type="button"
+                                                            (click)="accountCancel($event)">Cancel</button>
+                                                    </div>
+                                                    <div class="col text-right">
+                                                        <button class="btn btn-success" type="submit"
+                                                            [disabled]="disableAccountBtn">
+                                                            <div [class.d-none]="accountLoading">Save Changes</div>
+                                                            <div [class.d-none]="!accountLoading"><img
+                                                                    src="../../../../../../assets/img/loading.gif"
+                                                                    alt="">
+                                                            </div>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div *ngIf="publicUser == ''">
+                                <div class="seperator"></div>
+                                <div class="p-container">
+                                    <div class="product-label">
+                                        <span>Password:</span>
+                                        <div>
+                                            <button type="button" class="btn btn-secondary">Change Password</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div *ngIf="userType == 'customer'" id="address"></div>
+                            <div *ngIf="userType == 'customer'">
+                                <div class="seperator"></div>
+                                <div class="p-container">
+                                    <div class="product-label">
+                                        <span>Address:</span>
+                                        <div>
+                                            <button type="button" class="btn btn-secondary" [disabled]="newAddress"
+                                                (click)="addAddress($event, 'add')">New Address</button>
+
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div *ngIf="!newAddress" class="product-container saved-address-list">
+                                            <div class="address-loader" *ngIf="addressLoading">
+                                                <img src="../../../../../assets/img/loader.gif" alt="">
+                                            </div>
+                                            <label *ngFor="let address of addresses; index as i"
+                                                [class.on]="address.selected" class="saved-address">
+                                                <div class="select">
+                                                    <input type="radio" name="address" (change)="selectChange(i);"
+                                                        value="{{address.id}}">
+                                                </div>
+                                                <div class="address-info">
+                                                    <div class="recipient">Kuhle Hanisi</div>
+                                                    <div class="street">{{address.street}}</div>
+                                                    <div class="address2">{{address.address2}}</div>
+                                                </div>
+                                                <div class="actions">
+                                                    <span class="action"
+                                                        (click)="addressEdit($event, 'edit', i)">Edit</span>
+                                                    <span class="dot"></span>
+                                                    <span class="action"
+                                                        (click)="addressEdit($event, 'delete', i)">Delete</span>
+                                                </div>
+                                            </label>
+                                            <div *ngIf="addresses.length == 0 && !addressLoading"
+                                                style="text-align: center;padding: 11px 0;">
+                                                <button type="button" class="btn btn-secondary" [disabled]="newAddress"
+                                                    (click)="addAddress($event, 'add')">Add Address</button>
+                                            </div>
+                                        </div>
+                                        <div *ngIf="newAddress" class="product-container">
+                                            <form action="" [formGroup]="shippingForm" (ngSubmit)="submitShipping()">
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <label for="address1">Street Address</label>
+                                                        <input type="text" formControlName="street" id="address1"
+                                                            required="" class="form-control">
+                                                        <div class="error">
+                                                            <div *ngFor="let validation of shipping_messages.street">
+                                                                <div class="error-message"
+                                                                    *ngIf="shippingForm.get('street').hasError(validation.type) && (shippingForm.get('street').dirty || shippingForm.get('street').touched)">
+                                                                    {{validation.message}}</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <label for="address2">Address 2 (optional)</label>
+                                                        <input type="text" id="address2" formControlName="address2"
+                                                            class="form-control">
+                                                        <div class="error"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <label for="city">City</label>
+                                                        <input type="text" id="city" formControlName="city" required=""
+                                                            class="form-control">
+                                                        <div class="error">
+                                                            <div *ngFor="let validation of shipping_messages.city">
+                                                                <div class="error-message"
+                                                                    *ngIf="shippingForm.get('city').hasError(validation.type) && (shippingForm.get('city').dirty || shippingForm.get('city').touched)">
+                                                                    {{validation.message}}</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <label for="zip">Zip Code</label>
+                                                        <input type="number" formControlName="zip" minlength="4" min="0"
+                                                            (keydown)="watchInput($event, 'zip')" maxlength="5" id="zip"
+                                                            required="" class="form-control">
+                                                        <div class="error">
+                                                            <div *ngFor="let validation of shipping_messages.zip">
+                                                                <div class="error-message"
+                                                                    *ngIf="shippingForm.get('zip').hasError(validation.type) && (shippingForm.get('zip').dirty || shippingForm.get('zip').touched)">
+                                                                    {{validation.message}}</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row form-buttons">
+                                                    <div class="col text-left">
+                                                        <button class="btn btn-secondary" type="button"
+                                                            (click)="addAddress($event, 'cancel')">Cancel</button>
+                                                    </div>
+                                                    <div class="col text-right">
+                                                        <button class="btn btn-success" type="submit"
+                                                            [disabled]="disableShippingBtn || !shippingForm.valid">
+                                                            <div [class.d-none]="shippingLoading">Save address</div>
+                                                            <div [class.d-none]="!shippingLoading"><img
+                                                                    src="../../../../../../assets/img/loading.gif"
+                                                                    alt="">
+                                                            </div>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-2"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-1"></div>
+        </div>
+    </div>
+</main>
+
+<div class="main-footer"></div>

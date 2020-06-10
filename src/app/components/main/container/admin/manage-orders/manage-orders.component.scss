@@ -1,0 +1,50 @@
+@import '../../../../../../assets/css/layout';
+
+.sort-container {
+    padding-top: 6px;
+    margin-bottom: 25px;
+}
+
+.card-container {
+    padding: 0 0 1px;
+    min-height: 180px;
+
+    .table thead th {
+        border-top-color: transparent;
+    }
+
+    td {
+        vertical-align: middle;
+        font-size: 13px;
+    }
+
+    td.order-number {
+        font-weight: 600;
+        cursor: pointer;
+
+        &:hover {
+            text-decoration: underline;
+
+        }
+    }
+}
+
+.orders-loader {
+    justify-content: center;
+    height: 350px;
+    display: flex;
+    padding-top: 80px;
+
+    img {
+        height: 55px;
+    }
+}
+
+.empty-order {
+    text-align: center;
+    margin: 58px 0 15px;
+    font-size: 16px !important;
+    font-weight: 400;
+    color: #888787;
+    min-height: 150px;
+}

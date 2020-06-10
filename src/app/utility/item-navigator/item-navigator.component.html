@@ -1,0 +1,33 @@
+<div class="navigator-container">
+  <div class="container">
+    <div class="row navigator glide">
+      <div class="col-1 navigator-slider glide__arrows left" data-glide-el="controls">
+        <button class="glide__arrow glide__arrow--left" data-glide-dir="<"><i class="fa fa-angle-left"></i></button>
+      </div>
+      <div class="col-9 navigator-items">
+        <div class="glide__track" data-glide-el="track">
+          <ul class="glide__slides" *ngIf="categories.length == 0">
+            <li *ngFor="let ghostSlide of ghostSlides">
+              <a (click)="disableClickEvent($event)"></a>
+            </li>
+          </ul>
+          <ul class="glide__slides" *ngIf="categories.length != 0">
+            <li *ngFor="let category of categories">
+              <a [routerLink]="['/', 'category', category.name | lowercase]" class="main-slide-link" [class.active]="category.active" title="{{category.name}}">{{category.name}}</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-1 navigator-slider glide__arrows right" data-glide-el="controls">
+        <button class="glide__arrow glide__arrow--right" data-glide-dir=">"><i class="fa fa-angle-right"></i></button>
+      </div>
+      <div class="col-2 navigator-action">
+        <div class="navigator-search">
+          <input placeholder="Search" type="search" class="">
+          <div><i class="fa fa-search"></i></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

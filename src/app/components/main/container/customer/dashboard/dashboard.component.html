@@ -1,0 +1,71 @@
+<div class="nav-header fixed"></div>
+<main class="push-main">
+    <div class="container content-container">
+        <div class="row">
+            <div class="col-1"></div>
+            <div class="col">
+                <div class="wishlist-container">
+                    <div>
+                        <div class="manage-label"><span>My Account</span></div>
+                        <div class="row">
+                            <div class="col-4">
+                                <div>
+                                    <div class="p-container">
+                                        <div class="card-head">
+                                            <div class="text">Orders</div>
+                                            <div class="icon">
+                                                <i class="fa fa-shopping-basket"></i>
+                                            </div>
+                                        </div>
+                                        <div class="card-content">
+                                            <ul>
+                                                <li><a [routerLink]="['/', 'customer', 'orders']">Orders</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div>
+                                    <div class="p-container">
+                                        <div class="card-head">
+                                            <div class="text">Customer Information</div>
+                                            <div class="icon">
+                                                <i class="fa fa-user-circle"></i>
+                                            </div>
+                                        </div>
+                                        <div class="card-content">
+                                            <ul>
+                                                <li><a [routerLink]="['/', 'customer', 'profile']">Personal Details</a></li>
+                                                <li><a [routerLink]="['/', 'customer', 'profile']" fragment="address">Address Book</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div>
+                                    <div class="p-container">
+                                        <div class="card-head">
+                                            <div class="text">Wish List</div>
+                                            <div class="icon">
+                                                <i class="fa fa-heart"></i>
+                                            </div>
+                                        </div>
+                                        <div class="card-content">
+                                            <ul>
+                                                <li><a [routerLink]="['/', 'customer', 'wishlist']">My Wish List</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-1"></div>
+        </div>
+    </div>
+</main>
+<div class="main-footer"></div>

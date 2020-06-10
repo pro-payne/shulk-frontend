@@ -1,0 +1,87 @@
+<div class="modal-header">
+    <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-7 p-0 quick-look-pictures">
+                <img *ngFor="let image of product.pictures" src="{{image}}" alt="">
+            </div>
+            <div class="col p-0 quick-look-details">
+                <div class="quick-right-top">
+
+                    <div class="btn-group" dropdown>
+                        <button id="button-basic" dropdownToggle type="button"
+                            class="btn btn-sm btn-secondary dropdown-toggle" aria-controls="share">
+                            <i class="fa fa-share-alt"></i> Share <span class="caret"></span>
+                        </button>
+                        <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu"
+                            aria-labelledby="button-basic">
+                            <li role="menuitem"><a class="dropdown-item facebook" href="#"><i
+                                        class="fa fa-facebook"></i></a></li>
+                            <li role="menuitem"><a class="dropdown-item twitter" href="#"><i
+                                        class="fa fa-twitter"></i></a></li>
+                            <li role="menuitem"><a class="dropdown-item instagram" href="#"><i
+                                        class="fa fa-instagram"></i></a></li>
+                        </ul>
+                    </div>
+                    <span class="favorite" (click)="favorite(categoryIndex, productIndex)">
+                        <i [class.fa-heart-o]="!product.favorite" [class.fa-heart]="product.favorite" class="fa"
+                            [attr.title]="!product.favorite ? 'Add to favorites' : 'Remove from favorites'"></i>
+                    </span>
+                    <div>
+                        <button class="btn btn-sm shulk-btn-blue" [class.disabled]="compare"
+                            [disabled]="compareChecking" (click)="toCompare(categoryIndex, productIndex, compare)"
+                            [attr.title]="compare ? 'Remove from compare list' : 'Add to compare list'"><i
+                                class="fa fa-clone"></i>
+                            Compare</button>
+                    </div>
+                </div>
+                <div class="quick-look-scroll">
+                    <div class="quick-right-content">
+                        <div class="h3"><a
+                                [routerLink]="['/', 'product', product.name | safeUrl, product.owner.id]">{{product.name}}</a>
+                        </div>
+                        <div class="provided-by">at <a
+                                [routerLink]="['/', 'shop', product.owner.identity]">{{product.owner.name}}</a></div>
+                        <div class="product-price">R {{product.price}}</div>
+                        <div>
+                            <label>Description:</label>
+                            <div class="description">{{product.description}}</div>
+                        </div>
+                        <div class="special-info">
+                            <label for="instructions">Add special instructions (minimum of 50 characters):</label>
+                            <textarea name="instructions" (change)="contentChange($event)" placeholder="Start writing..." class="form-control"
+                                id="instructions"></textarea>
+                        </div>
+                    </div>
+                    <div class="quick-right-bottom">
+                        <div class="container-fluid p-0">
+                            <div class="row">
+                                <div class="col quantity">
+                                    <label for="quantity">Qty</label>
+                                    <div class="quantity-input">
+                                        <button class="input-minus" (click)="quantityDown(quantity)"><i
+                                                class="fa fa-minus"></i></button>
+                                        <input type="number" min="1" value="1" (change)="contentChange($event)" name="quantity" id="quantity" #quantity>
+                                        <button class="input-plus" (click)="quantityUp(quantity)"><i
+                                                class="fa fa-plus"></i></button>
+                                    </div>
+                                </div>
+                                <div class="col add-to-cart">
+                                    <button class="btn shulk-btn-red" [disabled]="updateCart" (click)="addToCart($event)">
+                                        <span class="icon"><i class="fa fa-shopping-cart"></i></span>
+                                        <span *ngIf="updated" class="text">Update cart</span>
+                                        <span *ngIf="!updated" class="text">Add to cart</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

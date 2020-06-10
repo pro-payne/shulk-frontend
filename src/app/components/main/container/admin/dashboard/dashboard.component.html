@@ -1,0 +1,100 @@
+<div class="nav-header fixed"></div>
+<main class="push-main">
+    <div class="container content-container">
+        <div class="row">
+            <div class="col-1"></div>
+            <div class="col">
+                <div>
+                    <div class="row" *ngIf="loadingStats">
+                        <div class="col-4 ghost-stats" *ngFor="let ghost of ghosts">
+                            <div>
+                                <div class="card-container">
+                                    <div class="card-head">
+                                        <div class="text"></div>
+                                        <div class="icon">
+                                            <span></span>
+                                        </div>
+                                    </div>
+                                    <div class="card-content">
+                                        <ul>
+                                            <li class="short"></li>
+                                            <li class="long"></li>
+                                            <li class="med"></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" *ngIf="!loadingStats">
+                        <div class="col-4">
+                            <div>
+                                <div class="card-container">
+                                    <div class="card-head">
+                                        <div class="text">Users</div>
+                                        <div class="icon">
+                                            <i class="fa fa-users"></i>
+                                        </div>
+                                    </div>
+                                    <div class="card-content">
+                                        <ul>
+                                            <li><a [routerLink]="['/', 'admin', 'orders']">Customers:
+                                                    {{stats.users.customers}}</a></li>
+                                            <li><a [routerLink]="['/', 'admin', 'orders']">Shops:
+                                                    {{stats.users.shops}}</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div>
+                                <div class="card-container">
+                                    <div class="card-head">
+                                        <div class="text">Orders</div>
+                                        <div class="icon">
+                                            <i class="fa fa-shopping-basket"></i>
+                                        </div>
+                                    </div>
+                                    <div class="card-content">
+                                        <ul>
+                                            <li><a [routerLink]="['/', 'customer', 'profile']">Pending:
+                                                    {{stats.orders.pending}}</a></li>
+                                            <li><a [routerLink]="['/', 'customer', 'profile']">Processing:
+                                                    {{stats.orders.processing}}</a></li>
+                                            <li><a [routerLink]="['/', 'customer', 'profile']">Canceled:
+                                                    {{stats.orders.canceled}}</a></li>
+                                            <li><a [routerLink]="['/', 'customer', 'profile']">Completed:
+                                                    {{stats.orders.completed}}</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div>
+                                <div class="card-container">
+                                    <div class="card-head">
+                                        <div class="text">Refund Requests</div>
+                                        <div class="icon">
+                                            <i class="fa fa-money"></i>
+                                        </div>
+                                    </div>
+                                    <div class="card-content">
+                                        <ul>
+                                            <li><a [routerLink]="['/', 'customer', 'wishlist']">Refund requests:
+                                                    {{stats.refunds.refund_requests}}</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-1"></div>
+        </div>
+    </div>
+</main>
+<div class="main-footer"></div>

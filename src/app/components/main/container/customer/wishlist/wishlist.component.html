@@ -1,0 +1,88 @@
+<div class="nav-header fixed"></div>
+<main class="push-main">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col">
+                <nav class="" aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a [routerLink]="['/', 'customer', 'account']">My Account</a>
+                        </li>
+                        <li class="breadcrumb-item active" aria-current="page">Wishlist</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <div class="container content-container">
+        <div class="row">
+            <div class="col-1"></div>
+            <div class="col">
+                <div class="wishlist-loader" *ngIf="loadingWishlist">
+                    <img src="../../../../../../assets/img/loader.gif" alt="">
+                </div>
+                <div class="wishlist-container" *ngIf="!loadingWishlist">
+                    <div>
+                        <div class="manage-label"><span>Wishlist</span></div>
+                        <div class="row">
+                            <div class="col-1"></div>
+                            <div class="col">
+                                <div>
+                                    <div class="p-container">
+                                        <div *ngIf="wishlist.length == 0">
+                                            <h3 class="empty-wish">Nothing added to wishlist</h3>
+                                        </div>
+                                        <div *ngIf="wishlist.length != 0" class="wishlist-table">
+                                            <div class="wishlist-actions top">
+                                                <div><button [disabled]="disableAll" (click)="addToCart();" class="btn btn-success add-to-cart">Add to Cart</button></div>
+                                                <div><button [disabled]="disableAll" (click)="removeItems()" class="btn btn-outline-secondary">Remove items</button>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <table class="table table-cell">
+                                                    <thead>
+                                                        <th class="select-all">
+                                                            <label for="select-all">
+                                                                <input id="select-all" (change)="selectAll($event.target)" type="checkbox">
+                                                                Select All
+                                                            </label>
+                                                        </th>
+                                                        <th>Title</th>
+                                                        <th>Price</th>
+                                                        <th>Date added</th>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr *ngFor="let wish of wishlist; index as i">
+                                                            <td class="checkbox">
+                                                                <input class="checkbox-input" value="{{i}}" type="checkbox" (change)="checked($event.target)">
+                                                                <div class="image">
+                                                                    <img src="{{wish.image}}"
+                                                                        alt="">
+                                                                </div>
+                                                            </td>
+                                                            <td>{{wish.title}}</td>
+                                                            <td>{{wish.price}}</td>
+                                                            <td>{{wish.date_added | date}}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="wishlist-actions bottom">
+                                                <div><button [disabled]="disableAll" (click)="addToCart();" class="btn btn-success add-to-cart">Add to Cart</button></div>
+                                                <div><button [disabled]="disableAll" (click)="removeItems()" class="btn btn-outline-secondary">Remove items</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-1"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-1"></div>
+        </div>
+    </div>
+</main>
+<div class="main-footer"></div>

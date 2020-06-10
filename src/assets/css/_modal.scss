@@ -1,0 +1,10 @@
+.modal-content {
+  border: none;
+  border-radius: 6px;
+}
+
+@media (min-width: 576px) {
+  .modal-xxl {
+    max-width: 900px;
+  }
+}

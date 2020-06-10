@@ -1,0 +1,213 @@
+input[type="number"] {
+    -webkit-appearance: textfield;
+    -moz-appearance: textfield;
+    appearance: textfield;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+}
+
+.form-control {
+    color: #707070;
+    border-color: #cfcfcf;
+
+    &:focus {
+        color: #707070;
+        border-color: #9b9b9b;
+    }
+
+    &::placeholder {
+        color: #a7a7a7;
+    }
+}
+
+.form-control:focus,
+.btn:focus {
+    box-shadow: none !important;
+}
+
+select.form-control {
+    display: inline-block;
+    width: 100%;
+    height: calc(2.25rem + 2px);
+    padding: .375rem 1.75rem .375rem .75rem;
+    line-height: 1.5;
+    color: #495057;
+    vertical-align: middle;
+    background: #fff url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'%3E%3Cpath fill='%23343a40' d='M2 0L0 2h4zm0 5L0 3h4z'/%3E%3C/svg%3E") no-repeat right .75rem center;
+    background-size: auto auto;
+    background-size: 8px 10px;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    border-top-left-radius: 0.25rem;
+    border-bottom-left-radius: 0.25rem;
+    border-top-left-radius: 0.25rem;
+    border-bottom-left-radius: 0.25rem;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    font-size: inherit;
+}
+
+.sort-container {
+    display: flex;
+    align-items: center;
+    padding-top: 18px;
+
+    @media (max-width: 514px){
+        display: block;
+    }
+
+    >div:not(:first-child) {
+        margin-left: 40px;
+
+        @media (max-width: 575px){
+            margin-left: 10px;
+        }
+
+        @media (max-width: 514px){
+            margin-left: 0;
+            margin-top: 13px;
+        }
+    }
+
+    label {
+        margin-bottom: 4px;
+        font-weight: 300;
+    }
+
+    select,
+    .select2-selection {
+        height: 38px !important;
+        border-radius: 6px !important;
+        font-size: 12px;
+        background-color: #fff;
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+        border-color: #fcfcfc !important;
+
+        &:focus {
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16) !important;
+        }
+    }
+
+    .select2-selection--single .select2-selection__rendered {
+        line-height: 38px !important;
+        padding-left: 0.9rem !important;
+    }
+
+    .by-category,
+    .by-category+.select2-container {
+        width: 155px !important;
+    }
+
+    .by-order,
+    .by-order+.select2-container {
+        width: 140px !important;
+    }
+
+}
+
+.select2-selection {
+    height: calc(1.5em + .75rem + 2px) !important;
+}
+
+.select2-selection__arrow {
+    height: 100% !important;
+}
+
+.select2-container--default .select2-results>.select2-results__options {
+    font-size: 12px;
+}
+
+.option-switch {
+    display: inline-block;
+    width: 50px;
+    height: 28px;
+    border-radius: 50px;
+    position: relative;
+    cursor: pointer;
+
+    .switch {
+        height: 100%;
+        width: 100%;
+        position: relative;
+        border-radius: 50px;
+
+        &:before {
+            content: '';
+            position: absolute;
+            height: 100%;
+            width: 28px;
+            background-color: #fff;
+            border-radius: 50%;
+            border: 2px solid #73afff;
+        }
+    }
+
+    input {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        visibility: hidden;
+        opacity: 0;
+
+        &:not(:checked)+.switch {
+            background-color: #a6a6a6;
+
+            &:before {
+                left: 0;
+                border-color: #a6a6a6;
+            }
+        }
+
+        &:checked+.switch {
+            background-color: #73afff;
+
+            &:before {
+                right: 0;
+                border-color: #73afff;
+            }
+        }
+    }
+
+}
+
+.password-field {
+    position: relative;
+
+    .reveal-eye {
+        right: 0;
+        width: 35px;
+        font-size: 18px;
+        outline: none;
+        bottom: 0;
+        position: absolute;
+        height: 100%;
+        text-align: center;
+        background-color: #e6e3e3;
+        border-radius: 0 .25rem .25rem 0;
+        border: 1px solid #cfcfcf;
+    }
+
+    input:focus+.reveal-eye {
+        border-color: #9b9b9b;
+    }
+}
+
+.ng-invalid.ng-touched {
+    border-color: #ee3030;
+
+    +.reveal-eye {
+        border-color: #ee3030 !important;
+        background-color: #ee3030 !important;
+        color: #fff;
+    }
+}
+
+.error {
+    color: #ee3030;
+    font-size: 12px;
+    padding-left: 4px;
+}

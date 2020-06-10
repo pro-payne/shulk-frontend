@@ -1,0 +1,99 @@
+.order-reference-status {
+
+    .cancel-order {
+        flex: auto;
+        text-align: right;
+
+        .btn {
+            min-height: 42.25px;
+            min-width: 104px;
+
+            img {
+                height: 25px;
+                margin-top: -6px;
+            }
+
+        }
+    }
+}
+
+.order-reference {
+    display: flex;
+    align-items: center;
+    flex: unset !important;
+
+    >div {
+        font-size: 14px !important;
+    }
+
+    >div:not(:last-child) {
+        border-right: 1px solid#777;
+        padding-right: 10px;
+        margin-right: 10px;
+    }
+
+    .status-txt {
+        font-size: 11px;
+        line-height: 8px;
+    }
+}
+
+.order-bottom {
+    border-top-color: #dfdfdf;
+    padding-top: 27px;
+    margin-top: 20px;
+    margin-bottom: 15px;
+}
+
+.order-detail {
+    .detail-title {
+        font-weight: 500;
+        margin-bottom: 8px;
+    }
+
+    .detail-container {
+        font-size: 12px !important;
+
+        >div {
+            line-height: 15px;
+        }
+    }
+}
+
+.order-summary {
+    .summary-details {
+        min-height: 100px;
+
+        >div {
+            margin-bottom: 6px;
+        }
+    }
+
+    .summary-item {
+        margin-bottom: 10px;
+    }
+
+    .summary-item,
+    .order-item {
+        >div:first-child {
+            display: inline-block;
+        }
+
+        >div:last-child {
+            float: right;
+        }
+    }
+
+    .summary-pay {
+        display: flex;
+        align-items: center;
+        margin-bottom: 9px;
+
+        >div:last-child {
+            flex: auto;
+            text-align: right;
+            font-size: 20px;
+            color: #28a745;
+        }
+    }
+}

@@ -1,0 +1,277 @@
+<nav class="header-nav">
+  <div class="container">
+    <div class="row">
+      <div class="logo">
+        <a [routerLink]="['/']"><img src="../../../../assets/img/logo.png" height="86" alt=""></a>
+      </div>
+      <div class="col header-nav-txt">
+        <div class="nav-txt-content">
+          <div *ngIf="publicUser" class="delivery-address">
+            <div class="delivery-label"><i class="fa fa-map-marker"></i> My location:</div>
+            <div class="delivery-options">
+              <div title="Dimbaza, 5671">Dimbaza, 5671</div>
+              <i class="fa fa-pencil"></i>
+            </div>
+          </div>
+          <ul>
+            <li *ngIf="publicUser" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
+              <a [routerLink]="['/', 'index']" title="Home">Home</a>
+            </li>
+            <li *ngIf="userType == 'customer' || publicUser">
+              <a [routerLink]="['/', 'index']" fragment="categories" title="Products">Products</a>
+            </li>
+            <li *ngIf="publicUser && userType != 'manager' && userType != 'customer'" routerLinkActive="active"
+              [routerLinkActiveOptions]="{exact:true}">
+              <a [routerLink]="['/','partners']" title="Partners">Partners</a>
+            </li>
+
+            <!-- Customer -->
+            <li *ngIf="userType == 'customer' && !publicUser" routerLinkActive="active">
+              <a [routerLink]="['/', 'customer', 'account']" title="My Account">My Account</a>
+            </li>
+            <li *ngIf="userType == 'customer' && !publicUser" routerLinkActive="active">
+              <a [routerLink]="['/','customer', 'orders']" title="My Orders">My Orders</a>
+            </li>
+            <li *ngIf="userType == 'customer' && !publicUser" routerLinkActive="active"
+              [routerLinkActiveOptions]="{exact:true}">
+              <a [routerLink]="['/','customer','wishlist']" title="Wish List">Wish List</a>
+            </li>
+            <li *ngIf="userType == 'customer' || publicUser && userType != 'manager' && userType != 'admin'"
+              routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
+              <a [routerLink]="['/','cart']" title="Cart">
+                Cart
+                <span class="cart-count" *ngIf="inCart > 0">
+                  {{inCart}}
+                </span>
+              </a>
+            </li>
+            <!-- end: Customer -->
+
+            <!-- Manager -->
+            <li *ngIf="userType == 'manager' && !publicUser" routerLinkActive="active">
+              <a [routerLink]="['/', 'store', 'dashboard']" title="Dashboard">Dashboard</a>
+            </li>
+            <li *ngIf="userType == 'manager' && !publicUser" routerLinkActive="active"
+              [routerLinkActiveOptions]="{exact:true}">
+              <a [routerLink]="['/','store', 'manage-products']" title="Manage Products">Manage Products</a>
+            </li>
+            <li *ngIf="userType == 'manager' && !publicUser" routerLinkActive="active"
+              [routerLinkActiveOptions]="{exact:true}">
+              <a [routerLink]="['/','manager', 'reports']" title="Reports">Reports</a>
+            </li>
+            <!-- end: Manager -->
+
+            <!-- Admin -->
+            <li *ngIf="userType == 'admin' && !publicUser" routerLinkActive="active">
+              <a [routerLink]="['/', 'admin', 'dashboard']" title="Dashboard">Dashboard</a>
+            </li>
+            <li *ngIf="userType == 'admin' && !publicUser" routerLinkActive="active">
+              <a [routerLink]="['/','admin', 'manage-orders']" title="Manage Orders">Manage Orders</a>
+            </li>
+            <li *ngIf="userType == 'admin' && !publicUser" routerLinkActive="active"
+              [routerLinkActiveOptions]="{exact:true}">
+              <a [routerLink]="['/','admin', 'reports']" title="Reports">Reports</a>
+            </li>
+            <!-- end: Admin -->
+
+            <li *ngIf="userType != 'admin' || publicUser" routerLinkActive="active"
+              [routerLinkActiveOptions]="{exact:true}">
+              <a [routerLink]="['/','about']" title="About">About</a>
+            </li>
+
+            <li *ngIf="loggedIn" dropdown class="nav-dropdown">
+              <a dropdownToggle href="javascript:{};" title="Hey, {{userData}}" aria-controls="profile"
+                class="dropdown-toggle">Hey, {{userData}} <span class="caret"></span></a>
+              <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">
+                <!-- Customer -->
+                <li *ngIf="userType == 'customer' && publicUser" role="menuitem">
+                  <a class="dropdown-item" [routerLink]="['/', 'customer', 'account']"><i class="fa fa-dashboard"></i>
+                    My Account</a>
+                </li>
+                <li *ngIf="userType == 'customer'" role="menuitem">
+                  <a class="dropdown-item" [routerLink]="['/', 'customer', 'profile']"><i class="fa fa-user"></i>
+                    Profile</a>
+                </li>
+                <!-- end: Customer -->
+
+                <!-- Manager -->
+                <li *ngIf="userType == 'manager' && publicUser" role="menuitem">
+                  <a class="dropdown-item" [routerLink]="['/', 'store', 'dashboard']"><i class="fa fa-dashboard"></i>
+                    Dashboard</a>
+                </li>
+                <li *ngIf="userType == 'manager'" role="menuitem">
+                  <a class="dropdown-item" [routerLink]="['/', 'store', 'user-profile']"><i class="fa fa-user"></i> My
+                    Profile</a>
+                </li>
+                <li *ngIf="userType == 'manager'" role="menuitem">
+                  <a class="dropdown-item" [routerLink]="['/', 'store', 'shop-profile']">
+                    <i class="fa fa-building-o"></i> Shop Profile</a>
+                </li>
+                <!-- end: Manager -->
+
+                <!-- Admin -->
+                <li *ngIf="userType == 'admin' && publicUser" role="menuitem">
+                  <a class="dropdown-item" [routerLink]="['/', 'admin', 'dashboard']"><i class="fa fa-dashboard"></i>
+                    Dashboard</a>
+                </li>
+                <li *ngIf="userType == 'admin' && !publicUser" role="menuitem">
+                  <a class="dropdown-item" [routerLink]="['/', 'admin', 'profile']"><i class="fa fa-user"></i> My
+                    Profile</a>
+                </li>
+                <li *ngIf="userType == 'admin' && !publicUser" role="menuitem">
+                  <a class="dropdown-item" [routerLink]="['/', 'about']"><i class="fa fa-info-circle"></i> About</a>
+                </li>
+                <!-- end: Admin -->
+
+                <li role="menuitem">
+                  <a class="dropdown-item" href="#signup" (click)="signOut($event);"><i class="fa fa-sign-out"></i> Sign
+                    out</a>
+                </li>
+
+              </ul>
+            </li>
+            <li *ngIf="!loggedIn"><a [routerLink]="['/', 'account','signin']" title="Sign In">Sign In</a></li>
+            <li *ngIf="!loggedIn" class="signup">
+              <div>
+                <a [routerLink]="['/', 'account','signup']" class="shulk-btn shulk-btn-red" title="Sign Up">Sign Up</a>
+              </div>
+            </li>
+          </ul>
+          <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+            aria-controls="navbarCollapse" [attr.aria-expanded]="!isCollapsed" aria-label="Toggle navigation"
+            (click)="isCollapsed = !isCollapsed">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+        </div>
+      </div>
+      <div id="navbarCollapse" [collapse]="!isCollapsed" [isAnimated]="true" class="col navbar-collapse collapse">
+        <ul class="collapsed-list">
+          <li *ngIf="publicUser" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
+            <a [routerLink]="['/', 'index']" title="Home">Home</a>
+          </li>
+          <li *ngIf="userType == 'customer' || publicUser">
+            <a [routerLink]="['/', 'index']" fragment="categories" title="Products">Products</a>
+          </li>
+          <li *ngIf="publicUser && userType != 'manager' && userType != 'customer'" routerLinkActive="active"
+            [routerLinkActiveOptions]="{exact:true}">
+            <a [routerLink]="['/','partners']" title="Partners">Partners</a>
+          </li>
+
+          <!-- Customer -->
+          <li *ngIf="userType == 'customer' && !publicUser" routerLinkActive="active">
+            <a [routerLink]="['/', 'customer', 'account']" title="My Account">My Account</a>
+          </li>
+          <li *ngIf="userType == 'customer' && !publicUser" routerLinkActive="active">
+            <a [routerLink]="['/','customer', 'orders']" title="My Orders">My Orders</a>
+          </li>
+          <li *ngIf="userType == 'customer' && !publicUser" routerLinkActive="active"
+            [routerLinkActiveOptions]="{exact:true}">
+            <a [routerLink]="['/','customer','wishlist']" title="Wish List">Wish List</a>
+          </li>
+          <li *ngIf="userType == 'customer' || publicUser && userType != 'manager' && userType != 'admin'"
+            routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
+            <a [routerLink]="['/','cart']" title="Cart">
+              Cart
+              <span class="cart-count" *ngIf="inCart > 0">
+                {{inCart}}
+              </span>
+            </a>
+          </li>
+          <!-- end: Customer -->
+
+          <!-- Manager -->
+          <li *ngIf="userType == 'manager' && !publicUser" routerLinkActive="active">
+            <a [routerLink]="['/', 'store', 'dashboard']" title="Dashboard">Dashboard</a>
+          </li>
+          <li *ngIf="userType == 'manager' && !publicUser" routerLinkActive="active"
+            [routerLinkActiveOptions]="{exact:true}">
+            <a [routerLink]="['/','store', 'manage-products']" title="Manage Products">Manage Products</a>
+          </li>
+          <li *ngIf="userType == 'manager' && !publicUser" routerLinkActive="active"
+            [routerLinkActiveOptions]="{exact:true}">
+            <a [routerLink]="['/','manager', 'reports']" title="Reports">Reports</a>
+          </li>
+          <!-- end: Manager -->
+
+          <!-- Admin -->
+          <li *ngIf="userType == 'admin' && !publicUser" routerLinkActive="active">
+            <a [routerLink]="['/', 'admin', 'dashboard']" title="Dashboard">Dashboard</a>
+          </li>
+          <li *ngIf="userType == 'admin' && !publicUser" routerLinkActive="active">
+            <a [routerLink]="['/','admin', 'manage-orders']" title="Manage Orders">Manage Orders</a>
+          </li>
+          <li *ngIf="userType == 'admin' && !publicUser" routerLinkActive="active"
+            [routerLinkActiveOptions]="{exact:true}">
+            <a [routerLink]="['/','admin', 'reports']" title="Reports">Reports</a>
+          </li>
+          <!-- end: Admin -->
+
+          <li *ngIf="userType != 'admin' || publicUser" routerLinkActive="active"
+            [routerLinkActiveOptions]="{exact:true}">
+            <a [routerLink]="['/','about']" title="About">About</a>
+          </li>
+
+          <li *ngIf="loggedIn" class="nav-dropdown">
+            <a href="javascript:{};" title="Hey, {{userData}}"
+              class="dropdown-toggle" data-toggle="collapse" data-target="#profileCollapse"
+              aria-controls="navbarCollapse" [attr.aria-expanded]="!isSmallCollapsed" (click)="isSmallCollapsed = !isSmallCollapsed">Hey, {{userData}} <span class="caret"></span></a>
+            <ul id="profileCollapse" [collapse]="!isSmallCollapsed" [isAnimated]="true" class="navbar-collapse collapse">
+              <!-- Customer -->
+              <li *ngIf="userType == 'customer' && publicUser" role="menuitem">
+                <a class="dropdown-item" [routerLink]="['/', 'customer', 'account']"><i class="fa fa-dashboard"></i>
+                  My Account</a>
+              </li>
+              <li *ngIf="userType == 'customer'" role="menuitem">
+                <a class="dropdown-item" [routerLink]="['/', 'customer', 'profile']"><i class="fa fa-user"></i>
+                  Profile</a>
+              </li>
+              <!-- end: Customer -->
+
+              <!-- Manager -->
+              <li *ngIf="userType == 'manager' && publicUser" role="menuitem">
+                <a class="dropdown-item" [routerLink]="['/', 'store', 'dashboard']"><i class="fa fa-dashboard"></i>
+                  Dashboard</a>
+              </li>
+              <li *ngIf="userType == 'manager'" role="menuitem">
+                <a class="dropdown-item" [routerLink]="['/', 'store', 'user-profile']"><i class="fa fa-user"></i> My
+                  Profile</a>
+              </li>
+              <li *ngIf="userType == 'manager'" role="menuitem">
+                <a class="dropdown-item" [routerLink]="['/', 'store', 'shop-profile']">
+                  <i class="fa fa-building-o"></i> Shop Profile</a>
+              </li>
+              <!-- end: Manager -->
+
+              <!-- Admin -->
+              <li *ngIf="userType == 'admin' && publicUser" role="menuitem">
+                <a class="dropdown-item" [routerLink]="['/', 'admin', 'dashboard']"><i class="fa fa-dashboard"></i>
+                  Dashboard</a>
+              </li>
+              <li *ngIf="userType == 'admin' && !publicUser" role="menuitem">
+                <a class="dropdown-item" [routerLink]="['/', 'admin', 'profile']"><i class="fa fa-user"></i> My
+                  Profile</a>
+              </li>
+              <li *ngIf="userType == 'admin' && !publicUser" role="menuitem">
+                <a class="dropdown-item" [routerLink]="['/', 'about']"><i class="fa fa-info-circle"></i> About</a>
+              </li>
+              <!-- end: Admin -->
+
+              <li role="menuitem">
+                <a class="dropdown-item" href="#signup" (click)="signOut($event);"><i class="fa fa-sign-out"></i> Sign
+                  out</a>
+              </li>
+
+            </ul>
+          </li>
+          <li *ngIf="!loggedIn"><a [routerLink]="['/', 'account','signin']" title="Sign In">Sign In</a></li>
+          <li *ngIf="!loggedIn" class="signup">
+            <div>
+              <a [routerLink]="['/', 'account','signup']" class="shulk-btn shulk-btn-red" title="Sign Up">Sign Up</a>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</nav>
+<notifier-container></notifier-container>

@@ -1,0 +1,470 @@
+<div class="nav-header fixed"></div>
+
+<main class="push-main">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col">
+                <nav class="checkout-nav" aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a [routerLink]="['/', 'cart']">Cart</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Checkout</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid steps-container">
+        <div class="row">
+            <div class="col">
+                <ul class="checkout-steps">
+                    <li>
+                        <a href="#shipping" (click)="changeStep($event, 'prev')">
+                            <div>
+                                <div [class.active]="checkoutStep == 'shipping'"
+                                    [class.check]="checkoutStep == 'payment'" class="step-icon">
+                                    <span>1</span>
+                                </div>
+                            </div>
+                            <div class="step-text">Shipping Address</div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:{};">
+                            <div>
+                                <div [class.active]="checkoutStep == 'payment'" class="step-icon">
+                                    <span>2</span>
+                                </div>
+                            </div>
+                            <div class="step-text">Payment Method</div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container content-container">
+        <div class="row">
+            <div class="col-1"></div>
+            <div class="col">
+                <!-- Step Shipping -->
+                <div [class.d-none]="checkoutStep != 'shipping'">
+                    <div class="row">
+                        <div class="col-2"></div>
+                        <div class="col">
+                            <div *ngIf="!loggedIn" class="quick-checkout">
+                                <h2>For quick checkout, sign in into your account.</h2>
+                                <div class="form-container">
+                                    <form action="" method="POST">
+                                        <div class="row">
+                                            <div class="col">
+                                                <label for="">Email Address</label>
+                                                <input type="email" required="" class="form-control">
+                                                <div class="input-error"></div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col">
+                                                <label for="">Password</label>
+                                                <a class="quick-forgot" [routerLink]="['/', 'forgot-password']">Forgot your password?</a>
+                                                <input type="password" required="" class="form-control">
+                                                <div class="input-error"></div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col">
+                                                <button type="submit" class="btn shulk-btn-red">Sign in to quick
+                                                    checkout</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div>
+                                <form action="" method="POST" novalidate [formGroup]="shippingForm" id="shippingForm"
+                                    (ngSubmit)="submitShipping()">
+                                    <div class="seperator"></div>
+                                    <div>
+                                        <h2>Personal Information</h2>
+                                        <div *ngIf="!loggedIn" class="form-container">
+                                            <div class="row">
+                                                <div class="col">
+                                                    <label for="firstName">First Name</label>
+                                                    <input type="text" id="firstName" formControlName="first_name"
+                                                        required="" class="form-control">
+                                                    <div class="input-error">
+                                                        <div
+                                                            *ngFor="let validation of shipping_form_messages.first_name">
+                                                            <div class="error-message"
+                                                                *ngIf="shippingForm.get('first_name').hasError(validation.type) && (shippingForm.get('first_name').dirty || shippingForm.get('first_name').touched)">
+                                                                {{validation.message}}</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col">
+                                                    <label for="lastName">Last Name</label>
+                                                    <input type="text" id="lastName" formControlName="last_name"
+                                                        required="" class="form-control">
+                                                    <div class="input-error">
+                                                        <div
+                                                            *ngFor="let validation of shipping_form_messages.last_name">
+                                                            <div class="error-message"
+                                                                *ngIf="shippingForm.get('last_name').hasError(validation.type) && (shippingForm.get('last_name').dirty || shippingForm.get('last_name').touched)">
+                                                                {{validation.message}}</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col">
+                                                    <label for="email">Email Address</label>
+                                                    <input type="email" id="email" formControlName="email" required=""
+                                                        class="form-control">
+                                                    <div class="input-error">
+                                                        <div *ngFor="let validation of shipping_form_messages.email">
+                                                            <div class="error-message"
+                                                                *ngIf="shippingForm.get('email').hasError(validation.type) && (shippingForm.get('email').dirty || shippingForm.get('email').touched)">
+                                                                {{validation.message}}</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col">
+                                                    <label for="cellNumber">Phone Number</label>
+                                                    <input type="text" id="cellNumber" formControlName="number"
+                                                        (keydown)="watchInput($event, 'cell')" required=""
+                                                        class="form-control">
+                                                    <div class="input-error">
+                                                        <div *ngFor="let validation of shipping_form_messages.number">
+                                                            <div class="error-message"
+                                                                *ngIf="shippingForm.get('number').hasError(validation.type) && (shippingForm.get('number').dirty || shippingForm.get('number').touched)">
+                                                                {{validation.message}}</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col">
+                                                    <label for="password">Password</label>
+                                                    <div class="password-field">
+                                                        <input formControlName="password" name="password"
+                                                            type="password" id="password" class="form-control"
+                                                            placeholder="" required>
+                                                        <button class="reveal-eye" type="button" id="reveal-password"
+                                                            (click)="openEye('password')">
+                                                            <i class="fa fa-eye"></i>
+                                                        </button>
+                                                    </div>
+                                                    <div class="input-error">
+                                                        <div *ngFor="let validation of shipping_form_messages.password">
+                                                            <div class="error-message"
+                                                                *ngIf="shippingForm.get('password').hasError(validation.type) && (shippingForm.get('password').dirty || shippingForm.get('password').touched)">
+                                                                {{validation.message}}</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div *ngIf="loggedIn" class="form-container loggedin">
+                                            <div class="row">
+                                                <div class="col">
+                                                    <label for="">Full Name:</label>
+                                                    <div class="user-detail">
+                                                        Kuhle Hanisi
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col">
+                                                    <label for="">Email Address:</label>
+                                                    <div class="user-detail">hanisi@gmail.com</div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col">
+                                                    <label for="cellNumber">Phone Number:</label>
+                                                    <div class="user-detail">0781361395</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="seperator"></div>
+                                    <div>
+                                        <h2>
+                                            Delivery Address
+                                            <button *ngIf="loggedIn" class="btn btn-primary btn-sm float-right"
+                                                [disabled]="newAddress" type="button"
+                                                (click)="addAddress($event, 'add')">
+                                                Add address</button>
+                                        </h2>
+                                        <div *ngIf="loggedIn && loadingAddress" class="address-loader">
+                                            <img src="../../../../../assets/img/loader.gif" alt="">
+                                            <div>Loading saved addresses...</div>
+                                        </div>
+                                        <div *ngIf="loggedIn && !newAddress && !loadingAddress"
+                                            class="saved-address-list">
+                                            <label *ngFor="let address of addresses; index as i"
+                                                [class.on]="address.selected" class="saved-address">
+                                                <div class="select">
+                                                    <input type="radio" name="address" (change)="selectChange(i);"
+                                                        value="{{address.id}}">
+                                                </div>
+                                                <div class="address-info">
+                                                    <div class="recipient">Kuhle Hanisi</div>
+                                                    <div class="street">{{address.street}}</div>
+                                                    <div class="address2">{{address.address2}}</div>
+                                                </div>
+                                                <div class="actions">
+                                                    <span class="action">Edit</span>
+                                                    <span class="dot"></span>
+                                                    <span class="action">Delete</span>
+                                                </div>
+                                            </label>
+                                        </div>
+                                        <div *ngIf="newAddress && !loadingAddress" class="form-container">
+                                            <div class="row">
+                                                <div class="col">
+                                                    <label for="address1">Street Address</label>
+                                                    <input type="text" formControlName="street" id="address1"
+                                                        required="" class="form-control">
+                                                    <div class="input-error">
+                                                        <div *ngFor="let validation of shipping_form_messages.street">
+                                                            <div class="error-message"
+                                                                *ngIf="shippingForm.get('street').hasError(validation.type) && (shippingForm.get('street').dirty || shippingForm.get('street').touched)">
+                                                                {{validation.message}}</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col">
+                                                    <label for="address2">Address 2 (optional)</label>
+                                                    <input type="text" id="address2" formControlName="address2"
+                                                        class="form-control">
+                                                    <div class="input-error"></div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col">
+                                                    <label for="city">City</label>
+                                                    <input type="text" id="city" formControlName="city" required=""
+                                                        class="form-control">
+                                                    <div class="input-error">
+                                                        <div *ngFor="let validation of shipping_form_messages.city">
+                                                            <div class="error-message"
+                                                                *ngIf="shippingForm.get('city').hasError(validation.type) && (shippingForm.get('city').dirty || shippingForm.get('city').touched)">
+                                                                {{validation.message}}</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col">
+                                                    <label for="zip">Zip Code</label>
+                                                    <input type="number" formControlName="zip" minlength="4" min="0"
+                                                        (keydown)="watchInput($event, 'zip')" maxlength="5" id="zip"
+                                                        required="" class="form-control">
+                                                    <div class="input-error">
+                                                        <div *ngFor="let validation of shipping_form_messages.zip">
+                                                            <div class="error-message"
+                                                                *ngIf="shippingForm.get('zip').hasError(validation.type) && (shippingForm.get('zip').dirty || shippingForm.get('zip').touched)">
+                                                                {{validation.message}}</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row checkout-actions">
+                                        <div class="col">
+                                            <button *ngIf="tempData == null" type="button"
+                                                class="btn btn-secondary btn-lg" (click)="changeStep($event, 'cart')">
+                                                <i class="fa fa-angle-left"></i> Back to cart
+                                            </button>
+
+                                            <button *ngIf="tempData != null" type="button"
+                                                class="btn btn-secondary btn-lg"
+                                                (click)="addAddress($event, 'cancel')">Cancel</button>
+                                        </div>
+                                        <div class="col text-right">
+                                            <button *ngIf="tempData == null" class="btn btn-primary btn-lg"
+                                                [disabled]="!shippingForm.valid || loading" type="submit">
+                                                <div [class.d-none]="loading">Continue</div>
+                                                <div [class.d-none]="!loading">
+                                                    <img src="../../../../../assets/img/loading.gif" alt="">
+                                                </div>
+                                            </button>
+
+                                            <button *ngIf="tempData != null" class="btn btn-primary btn-lg"
+                                                [disabled]="!shippingForm.valid || loading" type="button"
+                                                (click)="addAddress($event, 'save');">
+                                                <div [class.d-none]="loading">Save Address</div>
+                                                <div [class.d-none]="!loading">
+                                                    <img src="../../../../../assets/img/loading.gif" alt="">
+                                                </div>
+                                            </button>
+
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="col-3"></div>
+                    </div>
+                </div>
+
+                <!-- Step Payment -->
+                <div [class.d-none]="checkoutStep != 'payment'">
+                    <h2>Payment Method</h2>
+                    <div class="payment-container">
+                        <div class="row">
+                            <div class="col payment-details">
+                                <div class="card-details">
+                                    <div class="form-container">
+                                        <form action="" method="post" novalidate [formGroup]="paymentForm"
+                                            (ngSubmit)="submitPayment()">
+                                            <div class="row">
+                                                <div class="col checkout-protection">
+                                                    <div class="security-icon">
+                                                        <img src="../../../../../assets/img/icon/security-lock.png"
+                                                            alt="">
+                                                    </div>
+                                                    <div>
+                                                        <div class="secure-card">Secure Credit/Debit card payment</div>
+                                                        <div class="protected">Protected by <a
+                                                                href="https://www.ssl.com/faqs/faq-what-is-ssl/"
+                                                                target="_blank">SSL
+                                                                encryption</a> and <a href="https://www.payfast.co.za/"
+                                                                target="_blank">PayFast</a></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col">
+                                                    <label for="">Card Holder</label>
+                                                    <input type="text" (keyup)="cardHolder = $event.target.value"
+                                                        required="" formControlName="card_holder" class="form-control">
+                                                    <div class="input-error"></div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col add-icon">
+                                                    <label for="">Card Number</label>
+                                                    <input type="text" required="" [class.invalid]="!cardNumberValide"
+                                                        (change)="cardnumberChange($event.target.value)"
+                                                        (keyup)="cardNumber($event.target.value)"
+                                                        formControlName="card_number" class="form-control"
+                                                        id="card-number">
+                                                    <div class="icon"><i class="fa fa-cc-{{card_type}}"></i></div>
+                                                    <div class="input-error"></div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col">
+                                                    <label for="">Expiry Date</label>
+                                                    <input type="text" required=""
+                                                        (keyup)="cardExpiryDate = $event.target.value"
+                                                        placeholder="MM/YY" formControlName="expiry_date"
+                                                        id="expiry-date" class="form-control">
+                                                    <div class="input-error"></div>
+                                                </div>
+                                                <div class="col add-icon">
+                                                    <label for="">CVV</label>
+                                                    <a class="cvv-aware" href="https://www.cvvnumber.com/cvv.html"
+                                                        target="_blank">What is my CVV code?</a>
+                                                    <div class="password-field">
+                                                        <input type="password" [class.invalid]="!cvvValide"
+                                                            (change)="cvvWatch($event)" (keyup)="cvvWatch($event)"
+                                                            required="" id="cvv" formControlName="cvv"
+                                                            class="form-control">
+                                                        <div class="icon cvv-icon" id="reveal-cvv"
+                                                            (click)="openEye('cvv')">
+                                                            <i class="fa fa-eye"></i>
+                                                        </div>
+                                                    </div>
+                                                    <div class="input-info">3 digit number at the back of your
+                                                        credit/debit card</div>
+                                                    <div class="input-error"></div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col save-card">
+                                                    Save my payment details for future purchases
+                                                    <label for="switch" class="option-switch">
+                                                        <input type="checkbox" name="" formControlName="save_card"
+                                                            id="switch">
+                                                        <div class="switch"></div>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="row checkout-actions">
+                                                <div class="col">
+                                                    <button class="btn btn-secondary"
+                                                        (click)="changeStep($event, 'prev')">
+                                                        <i class="fa fa-angle-left"></i>
+                                                        Back to shipping
+                                                    </button>
+                                                </div>
+                                                <div class="col text-right">
+                                                    <button class="btn btn-primary"
+                                                        [disabled]="!paymentForm.valid || loading" type="submit">
+                                                        <div [class.d-none]="loading">Place Order</div>
+                                                        <div [class.d-none]="!loading">
+                                                            <img src="../../../../../assets/img/loading.gif" alt="">
+                                                        </div>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="card-container">
+                                    <div class="payment-card">
+                                        <div class="card-type">
+                                            <img *ngIf="card_type == 'visa'" class="visa"
+                                                src="../../../../../assets/img/icon/visa.svg" alt="">
+                                            <img *ngIf="card_type == 'mastercard'" class=""
+                                                src="../../../../../assets/img/icon/mastercard.svg" alt="">
+                                            <img *ngIf="card_type == 'amex'" class=""
+                                                src="../../../../../assets/img/icon/american-express.svg" alt="">
+                                            <img *ngIf="card_type == 'discover'" class=""
+                                                src="../../../../../assets/img/icon/discover.svg" alt="">
+                                            <div class="card-placeholder" *ngIf="card_type == 'unknown'"></div>
+                                        </div>
+                                        <div class="card-details d-block">
+                                            <div class="card-label-top">Card Number</div>
+                                            <div *ngIf="card_number.length != 0" class="card-number">{{card_number}}
+                                            </div>
+                                            <div *ngIf="card_number.length == 0" class="card-number">**** **** **** ****
+                                            </div>
+                                        </div>
+                                        <div class="card-details">
+                                            <div class="card-holder">
+                                                <div class="card-label-top">Card Holder</div>
+                                                <div *ngIf="cardHolder != ''" class="card-label-bottom">{{cardHolder}}
+                                                </div>
+                                                <div *ngIf="cardHolder == ''" class="card-label-bottom">******* ******
+                                                </div>
+                                            </div>
+                                            <div class="expiry-date">
+                                                <div class="card-label-top">Expiry Date</div>
+                                                <div *ngIf="cardExpiryDate != ''" class="card-label-bottom">
+                                                    {{cardExpiryDate}}
+                                                </div>
+                                                <div *ngIf="cardExpiryDate == ''" class="card-label-bottom">--/--</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<div class="main-footer"></div>

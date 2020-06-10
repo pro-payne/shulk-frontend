@@ -1,0 +1,96 @@
+<div class="nav-header fixed"></div>
+<main class="push-main">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col">
+                <nav class="" aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a [routerLink]="['/', 'customer', 'account']">My Account</a>
+                        </li>
+                        <li class="breadcrumb-item active" aria-current="page">Orders</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <div class="container content-container">
+        <div class="row">
+            <div class="col-1"></div>
+            <div class="col order-labels">
+                <div *ngIf="loadingOrders" class="orders-loader">
+                    <img src="../../../../../../assets/img/loader.gif" alt="">
+                </div>
+
+                <div class="orders-container" *ngIf="!loadingOrders">
+                    <div *ngIf="orders.length == 0">
+                        <h3 class="empty-order">You haven't placed an order yet</h3>
+                    </div>
+                    <div *ngFor="let order of orders;">
+                        <div class="manage-label"><span>{{order.type}} Orders</span></div>
+                        <div class="row">
+                            <div class="col-2"></div>
+                            <div class="col">
+                                <div *ngFor="let data of order.data; index as i">
+                                    <div class="p-container">
+                                        <div class="order-reference-status">
+                                            <div class="order-reference">
+                                                <div class="order-ref">Order: <a
+                                                        [routerLink]="['/', 'customer', 'orders', data.id]">#{{data.id}}</a>
+                                                </div>
+                                                <div class="order-date">Date ordered: {{data.ordered_at}}</div>
+                                            </div>
+                                            <div class="order-status">
+                                                <div class="status-txt">Order Status</div>
+                                                <div class="status {{data.status | lowercase}}">{{data.status}}</div>
+                                            </div>
+                                        </div>
+                                        <div class="order-bottom">
+                                            <div class="delivery">
+                                                <div>{{data.delivery_address.street}}</div>
+                                                <div>{{data.delivery_address.city}}</div>
+                                                <div>{{data.delivery_address.zip}}</div>
+                                            </div>
+                                            <div class="order-actions">
+                                                <div class="btn-group" dropdown>
+                                                    <button dropdownToggle type="button" [disabled]="disableAll"
+                                                        class="btn btn-outline-secondary" aria-controls="options">
+                                                        <div class="option">Options <i class="fa fa-angle-down"></i>
+                                                        </div>
+                                                        <div class="image d-none">
+                                                            <img src="../../../../../../assets/img/loading.gif" alt="">
+                                                        </div>
+                                                    </button>
+                                                    <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu"
+                                                        role="menu" aria-labelledby="options">
+                                                        <li role="menuitem" *ngIf="order.type =='Active'">
+                                                            <a class="dropdown-item" href="#">Track Order</a>
+                                                        </li>
+                                                        <li role="menuitem" *ngIf="order.type =='Active'">
+                                                            <a class="dropdown-item" href="#"
+                                                                (click)="cancelOrder($event, data.id)">Cancel Order</a>
+                                                        </li>
+                                                        <li role="menuitem" *ngIf="order.type =='Previous'">
+                                                            <a class="dropdown-item" href="#"
+                                                                (click)="reOrder($event, data.id)">Order Again</a>
+                                                        </li>
+                                                    </ul>
+                                                    <a href="#" (click)="orderDetails($event, data.id)"
+                                                        [class.disabled]="disableAll"
+                                                        class="btn btn-outline-secondary">Order details</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-2"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-1"></div>
+        </div>
+    </div>
+</main>
+<div class="main-footer"></div>

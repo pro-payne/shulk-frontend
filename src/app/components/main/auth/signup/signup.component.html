@@ -1,0 +1,87 @@
+<div class="auth-container">
+    <div>
+        <a [routerLink]="['/']" title="Home"><img class="mb-4" src="/assets/img/logo.png" alt="" width="70.3"
+                height="95"></a>
+    </div>
+    <h1 class="h3 mb-3 font-weight-normal">Please sign up </h1>
+    <form class="form-signup" (ngSubmit)="onSubmit()" novalidate [formGroup]="registerForm">
+        <div>
+            <label for="inputFname" class="sr-only">First Name</label>
+            <input name="first_name" formControlName="first_name" type="text" id="inputFname" class="form-control"
+                placeholder="First Name" required>
+            <div class="error">
+                <div *ngFor="let validation of validation_messages.first_name">
+                    <div class="error-message"
+                        *ngIf="registerForm.get('first_name').hasError(validation.type) && (registerForm.get('first_name').dirty || registerForm.get('first_name').touched)">
+                        {{validation.message}}</div>
+                </div>
+            </div>
+        </div>
+        <div>
+            <label for="inputLname" class="sr-only">Last Name</label>
+            <input formControlName="last_name" name="last_name" type="text" id="inputLname" class="form-control"
+                placeholder="Last Name" required>
+            <div class="error">
+                <div *ngFor="let validation of validation_messages.last_name">
+                    <div class="error-message"
+                        *ngIf="registerForm.get('last_name').hasError(validation.type) && (registerForm.get('last_name').dirty || registerForm.get('last_name').touched)">
+                        {{validation.message}}</div>
+                </div>
+            </div>
+        </div>
+        <div>
+            <label for="inputEmail" class="sr-only">Email Address</label>
+            <input formControlName="email" name="email" type="email" id="inputEmail" class="form-control"
+                placeholder="Email Address" required>
+            <div class="error">
+                <div *ngFor="let validation of validation_messages.email">
+                    <div class="error-message"
+                        *ngIf="registerForm.get('email').hasError(validation.type) && (registerForm.get('email').dirty || registerForm.get('email').touched)">
+                        {{validation.message}}</div>
+                </div>
+            </div>
+        </div>
+        <div>
+            <label for="inputPhonenumber" class="sr-only">Phone number</label>
+            <input formControlName="number" name="number" type="text" id="inputPhonenumber" class="form-control"
+                placeholder="Phone number" required>
+            <div class="error">
+                <div *ngFor="let validation of validation_messages.number">
+                    <div class="error-message"
+                        *ngIf="registerForm.get('number').hasError(validation.type) && (registerForm.get('number').dirty || registerForm.get('number').touched)">
+                        {{validation.message}}</div>
+                </div>
+            </div>
+        </div>
+        <div>
+            <label for="inputPassword" class="sr-only">Password</label>
+            <div class="password-field">
+                <input formControlName="password" name="password" type="password" id="inputPassword"
+                    class="form-control" placeholder="Password" required>
+                <button class="reveal-eye" type="button" (click)="openEye()">
+                    <i class="fa fa-eye" id="eye"></i>
+                </button>
+            </div>
+            <div class="error">
+                <div *ngFor="let validation of validation_messages.password">
+                    <div class="error-message"
+                        *ngIf="registerForm.get('password').hasError(validation.type) && (registerForm.get('password').dirty || registerForm.get('password').touched)">
+                        {{validation.message}}</div>
+                </div>
+            </div>
+        </div>
+        <div class="terms">
+            <div class="check-terms">
+                <input type="checkbox" id="terms" formControlName="terms">
+                <label for="terms">I accept the <a href="">terms</a> and <a href="">conditions</a></label>
+            </div>
+        </div>
+        <button class="btn btn-lg shulk-btn-red btn-block" [disabled]="registrationFail" [disabled]="!registerForm.valid || disableBtn" type="submit">
+            <div [class.d-none]="disableBtn">Sign up</div>
+            <div [class.d-none]="!disableBtn"><img src="../../../../../assets/img/loading.gif" alt=""></div>
+        </button>
+        <p>Already have an account? <a [routerLink]="['/','signin']" title="Sign In">Sign In</a>
+        
+    </form>
+</div>
+<notifier-container></notifier-container>

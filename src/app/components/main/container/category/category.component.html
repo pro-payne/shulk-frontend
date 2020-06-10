@@ -1,0 +1,181 @@
+<div class="nav-header fixed"></div>
+
+<main>
+    <div class="item-navigator add-margin"></div>
+    <div class="container">
+        <div *ngIf="subCategory" class="sort-container">
+            <div>
+                <label for="by-category">Category</label>
+                <div>
+                    <select name="" id="by-category" class="form-control">
+                        <option value="">Select category</option>
+                        <option *ngFor="let subItem of subCategories" [selected]="subItem.active"
+                            value="{{subItem.value}}">{{subItem.value}}</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <label for="by-order">Order</label>
+                <div>
+                    <select name="" id="by-order" class="form-control custom-select">
+                        <option value="">Select order</option>
+                        <option value="low-high">Low - High</option>
+                        <option value="high-low">High - Low</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="items">
+            <div *ngIf="!subCategory">
+                <div *ngIf="ghostLoading" class="ghost-item">
+                    <div *ngFor="let item of ghostContainer" class="item-content">
+                        <div class="item-title">
+                            <a (click)="disableClickEvent($event)"></a>
+                            <div class="see-more"><a (click)="disableClickEvent($event)"></a></div>
+                        </div>
+
+                        <div class="content">
+                            <div>
+                                <div *ngFor="let it of ghostData" class="item-container">
+                                    <div>
+                                        <div class="item"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div *ngIf="!ghostLoading">
+                    <div class="item-content" *ngFor="let itemContent of contentData; index as c">
+                        <div class="item-title">
+                            <a
+                                [routerLink]="['/', 'category', itemContent.info.category | lowercase, 'products', itemContent.info.sub_category]">{{itemContent.info.sub_category}}</a>
+                            <div class="see-more">
+                                <a
+                                    [routerLink]="['/', 'category', itemContent.info.category | lowercase, 'products', itemContent.info.sub_category]">See
+                                    More</a>
+                            </div>
+                        </div>
+
+                        <div class="content">
+                            <div>
+                                <div *ngFor="let item of itemContent.collection; index as p" class="item-container">
+                                    <div>
+                                        <div class="item">
+                                            <a [routerLink]="['/', 'product', item.name | safeUrl, item.id]">
+                                                <div>
+                                                    <div class="item-details">
+                                                        <div class="item-image">
+                                                            <div class="item-logo">
+                                                                <img src="{{item.owner.logo}}" alt="">
+                                                            </div>
+                                                            <a [routerLink]="['/', 'shop', item.owner.identity | lowercase]"
+                                                                class="item-detail-title"
+                                                                title="{{item.owner.name}}">@{{item.owner.name}}</a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="product-images">
+                                                        <img *ngFor="let image of item.pictures" src="{{image}}"
+                                                            height="150" alt="">
+                                                    </div>
+                                                </div>
+                                            </a>
+                                            <div class="favorite"
+                                                [attr.title]="!item.favorite ? 'Add to favorites' : 'Remove from favorites'"
+                                                (click)="favorite({c: c, p: p, f: item.favorite})">
+                                                <i [class.fa-heart-o]="!item.favorite" [class.fa-heart]="item.favorite"
+                                                    class="fa"></i>
+                                            </div>
+                                            <div class="product-details">
+                                                <div class="product-info">
+                                                    <div class="product-name" title="{{item.name}}">{{item.name}}</div>
+                                                    <div class="product-price">R {{item.price}}</div>
+                                                </div>
+                                                <div class="quick-view">
+                                                    <button class="btn btn-sm"
+                                                        (click)="quickLook($event, { category: c, product: p})">Quick
+                                                        Look</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div *ngIf="subCategory">
+                <div *ngIf="ghostLoading" class="ghost-item">
+                    <div class="item-content">
+                        <div class="content">
+                            <div>
+                                <div *ngFor="let it of ghostData" class="item-container">
+                                    <div>
+                                        <div class="item"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div *ngIf="!ghostLoading">
+                    <div class="item-content">
+                        <div class="content">
+                            <div>
+                                <div *ngFor="let item of contentData; index as p" class="item-container">
+                                    <div>
+                                        <div class="item">
+                                            <a [routerLink]="['/', 'product', item.name | safeUrl, item.id]">
+                                                <div>
+                                                    <div class="item-details">
+                                                        <div class="item-image">
+                                                            <div class="item-logo">
+                                                                <img src="{{item.owner.logo}}" alt="">
+                                                            </div>
+                                                            <a [routerLink]="['/', 'shop', item.owner.identity | lowercase]"
+                                                                class="item-detail-title"
+                                                                title="{{item.owner.name}}">@{{item.owner.name}}</a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="product-images">
+                                                        <img *ngFor="let image of item.pictures" src="{{image}}"
+                                                            height="150" alt="">
+                                                    </div>
+                                                </div>
+                                            </a>
+                                            <div class="favorite"
+                                                [attr.title]="!item.favorite ? 'Add to favorites' : 'Remove from favorites'"
+                                                (click)="favorite({p: p, f: item.favorite})">
+                                                <i [class.fa-heart-o]="!item.favorite" [class.fa-heart]="item.favorite"
+                                                    class="fa"></i>
+                                            </div>
+                                            <div class="product-details">
+                                                <div class="product-info">
+                                                    <div class="product-name" title="{{item.name}}">{{item.name}}</div>
+                                                    <div class="product-price">R {{item.price}}</div>
+                                                </div>
+                                                <div class="quick-view">
+                                                    <button class="btn btn-sm"
+                                                        (click)="quickLook($event, {product: p})">Quick
+                                                        Look</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</main>
+
+<div class="main-footer"></div>

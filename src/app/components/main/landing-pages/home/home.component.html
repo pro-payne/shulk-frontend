@@ -1,0 +1,98 @@
+<header class="container-fluid">
+  <div class="nav-header"></div>
+
+  <div class="header-hero">
+    <img src="../../../../assets/img/bookstore-boutique-chair-775999.jpg" alt="">
+  </div>
+
+  <div class="hero">
+    <h1>Bring the store to your door.</h1>
+    <h4>Find out what a difference same-day delivery can change can make in your life</h4>
+    <div class="hero-search">
+      <div class="location-search">
+          <input type="search" placeholder="Enter your address">
+          <i class="fa fa-map-marker"></i>
+          <div>
+              <button type="button">Get Started</button>
+          </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="header-downarrow">
+    <i class="fa fa-angle-down"></i>
+  </div>
+
+</header>
+
+<main>
+  <div class="container-fluid main-top">
+    <div class="row">
+      <div class="col main-top-left">
+        <h2>Let us help with all your grossery hardships</h2>
+        <h3>Just tell us what, we deliver at your door step</h3>
+      </div>
+      <div class="col main-top-right">
+        <div>Start by searching what you want</div>
+        <div class="search-input">
+          <form method="get" action="">
+            <input type="search" name="landing-search" placeholder="Search by product name, shop, location"
+              class="form-control" id="landing-search">
+            <button type="button" class="search-icon">
+              <i class="fa fa-search"></i>
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- <div class="item-navigator"></div> -->
+
+  <div class="container items-container">
+
+    <h2 class="category-question" id="categories">What are you looking for?</h2>
+
+    <div>
+      <div class="item-content">
+        <div class="content">
+
+          <div *ngIf="ghostLoading" class="ghost-item">
+            <div *ngFor="let it of ghostData" class="item-container">
+              <div>
+                <div class="item">
+                  <a (click)="disableClickEvent($event)">
+                    <div></div>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="!ghostLoading">
+            <div class="item-container" *ngFor="let itemData of contentData">
+              <div>
+                <div class="item">
+                  <a [routerLink]="['/', 'category', itemData.name | lowercase]">
+                    <div class="item-details">
+                      <div class="item-image">
+                        <div class="item-logo">
+                          <img src="{{itemData.picture}}" alt="">
+                        </div>
+                        <div class="item-detail-title" title="{{itemData.name}}">{{itemData.name}}</div>
+                      </div>
+                    </div>
+                    <div>
+                      <img src="{{itemData.picture}}" height="150" alt="">
+                    </div>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<div class="main-footer"></div>

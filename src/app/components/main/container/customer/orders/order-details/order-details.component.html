@@ -1,0 +1,140 @@
+<div class="nav-header fixed"></div>
+<main class="push-main">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col">
+                <nav class="" aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a [routerLink]="['/', 'customer', 'account']">My Account</a>
+                        </li>
+                        <li class="breadcrumb-item">
+                            <a [routerLink]="['/', 'customer', 'orders']">Orders</a>
+                        </li>
+                        <li class="breadcrumb-item active" aria-current="page">Order Details</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <div class="container content-container">
+        <div class="row">
+            <div class="col-1"></div>
+            <div class="col order-labels">
+
+                <div class="orders-container">
+                    <div>
+                        <div class="manage-label"><span>Order Details</span></div>
+                        <div class="row">
+                            <div class="col-1"></div>
+                            <div class="col">
+                                <div *ngIf="loadingOrder" class="orders-loader">
+                                    <img src="../../../../../../../assets/img/loader.gif" alt="">
+                                </div>
+                                <div *ngIf="!loadingOrder">
+                                    <div class="p-container">
+                                        <div class="order-reference-status">
+                                            <div class="order-reference">
+                                                <div class="order-ref">Order #{{orderDetails.id}}</div>
+                                                <div class="order-date">Ordered {{orderDetails.ordered_at | date}}</div>
+                                                <div class="order-status">
+                                                    <div class="status-txt">Order Status</div>
+                                                    <div class="status {{orderDetails.status | lowercase}}">
+                                                        {{orderDetails.status | uppercase}}</div>
+                                                </div>
+                                            </div>
+                                            <div class="cancel-order">
+                                                <button *ngIf="orderState == 'cancel'"
+                                                    [class.btn-outline-secondary]="cancelingOrder"
+                                                    [class.btn-secondary]="!cancelingOrder" class="btn"
+                                                    [disabled]="disablePayNow" (click)="cancelOrder(orderDetails.id);">
+                                                    <div [class.d-none]="!cancelingOrder">Cancel Order</div>
+                                                    <div [class.d-none]="cancelingOrder"><img
+                                                            src="../../../../../../assets/img/loading.gif" alt=""></div>
+                                                </button>
+                                                <button *ngIf="orderState == 're-order'"
+                                                    [class.btn-outline-secondary]="cancelingOrder"
+                                                    [class.btn-secondary]="!cancelingOrder" class="btn"
+                                                    [disabled]="disablePayNow" (click)="reOrder(orderDetails.id);">
+                                                    <div [class.d-none]="!cancelingOrder">Order Again</div>
+                                                    <div [class.d-none]="cancelingOrder"><img
+                                                            src="../../../../../../assets/img/loading.gif" alt=""></div>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="order-bottom">
+                                            <div class="order-detail">
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <div class="detail-title">
+                                                            <i class="fa fa-address-book"></i>
+                                                            Shipping Address
+                                                        </div>
+                                                        <div class="detail-container">
+                                                            <div>{{orderDetails.delivery_address.receiver}}</div>
+                                                            <div>{{orderDetails.delivery_address.street}}</div>
+                                                            <div>{{orderDetails.delivery_address.city}}</div>
+                                                            <div>{{orderDetails.delivery_address.zip}}</div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-3"></div>
+                                                    <div class="col">
+                                                        <div class="detail-title">
+                                                            <i class="fa fa-list-ul"></i>
+                                                            Order Summary
+                                                        </div>
+                                                        <div class="detail-container order-summary">
+                                                            <div class="summary-details">
+                                                                <div>
+                                                                    <div class="order-item">
+                                                                        <div>{{orderDetails.summary.items.count}} Items
+                                                                        </div>
+                                                                        <div>R {{orderDetails.summary.items.total}}
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="summary-item">
+                                                                    <div>Delivery</div>
+                                                                    <div>R {{orderDetails.summary.delivery_cost}}</div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="summary-item" *ngIf="orderState != 'cancel'">
+                                                                <div>Order Total:</div>
+                                                                <div>R {{orderDetails.summary.delivery_cost}}</div>
+                                                            </div>
+                                                            <div class="summary-pay" *ngIf="orderState == 'cancel'">
+                                                                <div>To Pay:</div>
+                                                                <div>R {{orderDetails.summary.total}}</div>
+                                                            </div>
+                                                            <div *ngIf="orderState == 'cancel'">
+                                                                <button class="btn btn-block btn-success"
+                                                                    [disabled]="disablePayNow">
+                                                                    Pay Now
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="seperator d-none"></div>
+                                    <div class="p-container d-none">
+                                        <div class="order-reference-status">
+                                            <div class="order-reference">
+                                                <div class="order-ref">Ordered products</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-1"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-1"></div>
+        </div>
+    </div>
+</main>
+<div class="main-footer"></div>
