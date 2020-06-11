@@ -53,7 +53,7 @@
                         </div>
                         <div class="special-info">
                             <label for="instructions">Add special instructions (minimum of 50 characters):</label>
-                            <textarea name="instructions" (change)="contentChange($event)" placeholder="Start writing..." class="form-control"
+                            <textarea name="instructions" (change)="contentChange()" placeholder="Start writing..." class="form-control"
                                 id="instructions"></textarea>
                         </div>
                     </div>
@@ -65,7 +65,7 @@
                                     <div class="quantity-input">
                                         <button class="input-minus" (click)="quantityDown(quantity)"><i
                                                 class="fa fa-minus"></i></button>
-                                        <input type="number" min="1" value="1" (change)="contentChange($event)" name="quantity" id="quantity" #quantity>
+                                        <input type="number" min="1" value="1" (change)="contentChange()" name="quantity" id="quantity" #quantity>
                                         <button class="input-plus" (click)="quantityUp(quantity)"><i
                                                 class="fa fa-plus"></i></button>
                                     </div>

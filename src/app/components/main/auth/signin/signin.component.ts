@@ -115,7 +115,8 @@ export class SigninComponent implements OnInit {
     })
   }
 
-  public onSubmit() {
+  public onSubmit(event: any) {
+    event.preventDefault();
     if (this.loginForm.status != 'VALID') return;
 
     this.disableBtn = true;
