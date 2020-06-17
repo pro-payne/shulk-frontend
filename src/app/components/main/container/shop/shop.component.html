@@ -23,7 +23,7 @@
             <div>
                 <select name="category" id="by-category" class="form-control by-category">
                     <option value="all">All</option>
-                    <option *ngFor="let category of categories.categories" [selected]="category.active"
+                    <option *ngFor="let category of categories" [selected]="category.active"
                         value="{{category.value}}">
                         {{category.value}}</option>
                 </select>
@@ -34,7 +34,7 @@
             <div>
                 <select name="sub-category" id="by-subcategory" class="form-control by-category">
                     <option value="all">All</option>
-                    <option *ngFor="let sub_category of categories.sub_categories" [selected]="sub_category.active"
+                    <option *ngFor="let sub_category of sub_categories" [selected]="sub_category.active"
                         value="{{sub_category.value}}">
                         {{sub_category.value}}</option>
                 </select>

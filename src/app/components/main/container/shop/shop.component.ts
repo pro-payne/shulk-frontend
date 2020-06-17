@@ -28,6 +28,7 @@ export class ShopComponent implements OnInit, OnDestroy {
   public allProducts: boolean;
   public shop: any = [];
   public categories: any[];
+  public sub_categories: any[];
   private query: string;
   public userType: string;
 
@@ -44,6 +45,7 @@ export class ShopComponent implements OnInit, OnDestroy {
     this.ghostLoading = true;
     this.ghostFunction();
     this.categories = [];
+    this.sub_categories = [];
     this.allProducts = true;
     this.query = 'all';
   }
@@ -239,7 +241,8 @@ export class ShopComponent implements OnInit, OnDestroy {
   }
 
   private _products(_data: any) {
-    this.categories = _data.categories
+    this.categories = _data.categories.categories
+    this.sub_categories = _data.categories.sub_categories
     this.transport.send({
       msg: _data.nav_categories,
       type: 'nav-categories'

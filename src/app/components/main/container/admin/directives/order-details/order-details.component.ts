@@ -15,6 +15,7 @@ export class OrderDetailsComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription[] = [];
   public disableNow: boolean;
   public orderDetails: any;
+  public orderState: string;
 
   constructor(
     public bsModalRef: BsModalRef,
@@ -23,6 +24,7 @@ export class OrderDetailsComponent implements OnInit, OnDestroy {
     private transport: TransportorService
   ) {
     this.disableNow = false;
+    this.orderState = ''
    }
 
   ngOnInit() {
